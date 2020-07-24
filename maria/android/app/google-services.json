@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "92924587346",
+    "firebase_url": "https://login-maria.firebaseio.com",
+    "project_id": "login-maria",
+    "storage_bucket": "login-maria.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92924587346:android:759de013dcbe30ff921e8b",
+        "android_client_info": {
+          "package_name": "somaya.maria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92924587346-3slm9vs5ucjjep444ne9svgupvjv5ak5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "somaya.maria",
+            "certificate_hash": "9c411f3c4c456b65ee110829c812c769ebec1a60"
+          }
+        },
+        {
+          "client_id": "92924587346-pjetdplddj9tk16hfousksbuan4a2mt5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYfbhOpSqdI7sT_M1rLWBqfrXDF-BbZd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92924587346-pjetdplddj9tk16hfousksbuan4a2mt5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
