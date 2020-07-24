@@ -48,7 +48,7 @@ class AddAndRemove extends StatelessWidget {
             ),
             onTap: () {
               addOrRemove = index;
-              Process(staffOrServices, addOrRemove);
+              // Process(staffOrServices, addOrRemove);
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => Process(staffOrServices, addOrRemove)));
             },

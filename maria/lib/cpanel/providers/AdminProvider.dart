@@ -3,11 +3,12 @@ import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/model/Service.dart';
 import 'package:maria/cpanel/repositories/AdminDB.dart';
 import 'package:maria/cpanel/repositories/AdminRep.dart';
+import 'package:maria/model/Staff.dart';
 
 class AdminProvider extends ChangeNotifier {
+  //Service Section
   List<Service> allServices = [];
   String ServiceName;
-  bool isAvailable = true;
   double fee;
 
   setServiceName(String sName) {
@@ -33,7 +34,7 @@ class AdminProvider extends ChangeNotifier {
     try {
       List<Service> services = await AdminRep.adminRep.getAllServices();
       this.allServices = services;
-
+      return this.allServices;
       notifyListeners();
     } catch (error) {
       mySnackBar(error: error);
@@ -48,5 +49,59 @@ class AdminProvider extends ChangeNotifier {
   editService(Service service) async {
     await AdminDB.adminDB.editService(service);
     getAllServices();
+  }
+
+  //Staff Section
+  List<Staff> allStaff = [];
+  String staffName;
+  String staffEmail;
+  String staffPassword;
+
+  setStaffName(String stName) {
+    this.staffName = stName;
+  }
+
+  setStaffEmail(String stEmail) {
+    this.staffEmail = stEmail;
+  }
+
+  setStaffPassword(String stPassword) {
+    this.staffPassword = stPassword;
+  }
+
+  Future<bool> addNewStaff() async {
+    Staff staff = Staff(
+        staffname: this.staffName,
+        email: this.staffEmail,
+        password: this.staffPassword);
+    String staffId = await AdminDB.adminDB.addNewStaff(staff);
+    if (staffId != null) {
+      getAllStaff();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getAllStaff() async {
+    try {
+      List<Staff> staff = await AdminRep.adminRep.getAllStaff();
+      this.allStaff = staff;
+      return this.allStaff;
+
+      notifyListeners();
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  deleteStaff(String documentId) async {
+    await AdminDB.adminDB.deleteStaff(documentId);
+    getAllStaff();
+  }
+
+  editStaff(Staff staff) async {
+    await AdminDB.adminDB.editStaff(staff);
+    getAllStaff();
   }
 }
