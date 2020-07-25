@@ -7,7 +7,21 @@ import 'package:provider/provider.dart';
 import '../../Constant/Images/ImagesAndConst.dart';
 import 'AdminTextField.dart';
 
-enum textFieldType { name, fee }
+enum textFieldType { name, fee, staffname, email, password }
+/*icon: Icon(
+                        Icons.person,
+                        color: Color(0xffff6ea1),
+                      ),*/
+
+/* icon: Icon(
+                        Icons.vpn_key,
+                        color: Color(0xffff6ea1),
+                      ),*/
+
+/* icon: Icon(
+                        Icons.email,
+                        color: Color(0xffff6ea1),
+                      ),*/
 
 class Process extends StatelessWidget {
   int stOrSer;
@@ -28,70 +42,45 @@ class Process extends StatelessWidget {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          body: Form(
-            key: _formKey,
+          body: Container(
             child: Center(
               child: Column(children: <Widget>[
                 SizedBox(
                   height: 10,
                 ),
                 Container(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.person,
-                        color: Color(0xffff6ea1),
-                      ),
-                      labelText: 'Username *',
-                    ),
-                  ),
-                ),
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: AdminTextField(
+                      label: "Username *",
+                      type: textFieldType.staffname,
+                    )),
                 SizedBox(
                   height: 10,
                 ),
                 Container(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.vpn_key,
-                        color: Color(0xffff6ea1),
-                      ),
-                      labelText: 'Password *',
-                    ),
-                  ),
-                ),
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: AdminTextField(
+                      label: "Password *",
+                      type: textFieldType.password,
+                    )),
                 SizedBox(
                   height: 10,
                 ),
-                Container(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.vpn_key,
-                        color: Color(0xffff6ea1),
-                      ),
-                      labelText: 'Re-write password *',
-                    ),
-                  ),
-                ),
+                /*Container(
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: AdminTextField(
+                      label: "Re-write password *",
+                      type: textFieldType.password2,
+                    )),
                 SizedBox(
                   height: 10,
-                ),
+                ),*/
                 Container(
-                  constraints: BoxConstraints(maxWidth: 400),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      icon: Icon(
-                        Icons.email,
-                        color: Color(0xffff6ea1),
-                      ),
-                      labelText: 'Email address *',
-                    ),
-                  ),
-                ),
+                    constraints: BoxConstraints(maxWidth: 400),
+                    child: AdminTextField(
+                      label: "Email address *",
+                      type: textFieldType.email,
+                    )),
                 SizedBox(
                   height: 10,
                 ),
@@ -100,7 +89,9 @@ class Process extends StatelessWidget {
                   child: RaisedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10)),
-                    onPressed: () {},
+                    onPressed: () {
+                      adminProvider.addNewStaff();
+                    },
                     color: Color(0xffff6ea1),
                     child: Text(
                       "Add Staff",
@@ -250,23 +241,3 @@ class Process extends StatelessWidget {
     }
   }
 }
-//consumer
-/*Consumer<AdminProvider>(
-            builder: (context, value, child) {
-              List<Service> allService = value.getAllServices();
-              if (allService.isEmpty) {
-                return Center(
-                  child: Text('No Services Found'),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: allService.length,
-                  itemBuilder: (context, index) {
-                    return AdminService(
-                      service: allService[index],
-                    );
-                  },
-                );
-              }
-            },
-          ),*/

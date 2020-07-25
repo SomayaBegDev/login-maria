@@ -19,6 +19,12 @@ class AdminTextField extends StatelessWidget {
           adminProvider.setServiceName(value);
         } else if (type == textFieldType.fee) {
           adminProvider.setFee(value);
+        } else if (type == textFieldType.staffname) {
+          adminProvider.setStaffName(value);
+        } else if (type == textFieldType.email) {
+          adminProvider.setStaffEmail(value);
+        } else if (type == textFieldType.password) {
+          adminProvider.setStaffPassword(value);
         }
       },
       keyboardType:

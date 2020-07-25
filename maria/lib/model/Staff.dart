@@ -21,6 +21,8 @@ class Staff {
   toJson() {
     return {
       'username': this.staffname,
+      'email': this.email,
+      'password': this.password
     };
   }
 }

@@ -34,8 +34,8 @@ class AdminProvider extends ChangeNotifier {
     try {
       List<Service> services = await AdminRep.adminRep.getAllServices();
       this.allServices = services;
-      return this.allServices;
       notifyListeners();
+      return this.allServices;
     } catch (error) {
       mySnackBar(error: error);
     }
@@ -87,9 +87,8 @@ class AdminProvider extends ChangeNotifier {
     try {
       List<Staff> staff = await AdminRep.adminRep.getAllStaff();
       this.allStaff = staff;
-      return this.allStaff;
-
       notifyListeners();
+      return this.allStaff;
     } catch (error) {
       mySnackBar(error: error);
     }
