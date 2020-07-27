@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/cpanel/model/Service.dart';
@@ -10,6 +12,7 @@ class AdminProvider extends ChangeNotifier {
   List<Service> allServices = [];
   String ServiceName;
   double fee;
+  String imageUrl;
 
   setServiceName(String sName) {
     this.ServiceName = sName;
@@ -19,8 +22,16 @@ class AdminProvider extends ChangeNotifier {
     this.fee = double.parse(sFee);
   }
 
+  uploadImage(File imageFile) async {
+    String imageUrl = await AdminDB.adminDB.uploadImage(imageFile);
+    this.imageUrl = imageUrl;
+    print(imageUrl);
+    notifyListeners();
+  }
+
   Future<bool> addNewService() async {
-    Service service = Service(name: this.ServiceName, fee: this.fee);
+    Service service =
+        Service(name: this.ServiceName, fee: this.fee, imageUrl: this.imageUrl);
     String serviceId = await AdminDB.adminDB.addNewService(service);
     if (serviceId != null) {
       getAllServices();

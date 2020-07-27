@@ -1,11 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:maria/cpanel/UI/AdminService.dart';
-import 'package:maria/cpanel/UI/AdminTextField.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
 class ShowServices extends StatelessWidget {
@@ -41,6 +42,42 @@ class AddNewService extends StatelessWidget {
     return Container(
       child: Center(
         child: Column(children: <Widget>[
+          SizedBox(
+            height: 10,
+          ),
+          GestureDetector(
+            onTap: () async {
+              PickedFile imageFile = await ImagePicker().getImage(
+                  source: ImageSource.gallery, maxWidth: 250, maxHeight: 250);
+              File file = File(imageFile.path);
+              Provider.of<AdminProvider>(context, listen: false)
+                  .uploadImage(file);
+            },
+            child: Consumer<AdminProvider>(
+              builder: (context, value, child) {
+                String imageUrl = value.imageUrl;
+                if (imageUrl == null) {
+                  return Container(
+                    height: 250,
+                    width: 250,
+                    color: Colors.black12,
+                    child: Center(
+                      child: Text(
+                        "Upload image",
+                        style: TextStyle(color: appBarColor),
+                      ),
+                    ),
+                  );
+                } else {
+                  return CachedNetworkImage(
+                    imageUrl: imageUrl,
+                    height: 250,
+                    width: 250,
+                  );
+                }
+              },
+            ),
+          ),
           SizedBox(
             height: 10,
           ),

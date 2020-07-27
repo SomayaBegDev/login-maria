@@ -9,18 +9,6 @@ class AdminRep {
   static AdminRep adminRep = AdminRep._();
 
   //Service section
-/*  Future<List<Service>> getAllServices() async {
-    try {
-      List<DocumentSnapshot> documents = await AdminDB.adminDB.getAllServices();
-
-      List<Service> services =
-          documents.map((e) => Service.fromDocumetSnapshot(e)).toList();
-
-      return services;
-    } catch (error) {
-      mySnackBar(error: error);
-    }
-  }*/
 
   Future<List<Service>> getAllServices() async {
     try {

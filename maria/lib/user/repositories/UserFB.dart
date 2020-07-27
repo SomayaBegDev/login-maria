@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/Constant/Names.dart';
-import 'package:maria/user/model/Booking.dart';
+import 'package:maria/user/model/UserBooking.dart';
 
 class UserFB {
   UserFB._();

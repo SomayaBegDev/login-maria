@@ -1,16 +1,33 @@
-import 'dart:developer';
+import 'dart:io';
 import 'package:maria/Constant/Names.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/cpanel/model/Staff.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class AdminDB {
   AdminDB._();
   static final AdminDB adminDB = AdminDB._();
   Firestore firestoreAdmin = Firestore.instance;
+  FirebaseStorage firebaseStorageAdmin = FirebaseStorage.instance;
 
   //Service operation
+  Future<String> uploadImage(File file) async {
+    try {
+      DateTime dateTime = DateTime.now();
+      StorageTaskSnapshot snapshot = await firebaseStorageAdmin
+          .ref()
+          .child('services/$dateTime.png')
+          .putFile(file)
+          .onComplete;
+      String imageUrl = await snapshot.ref.getDownloadURL();
+      return imageUrl;
+    } catch (error) {
+      print(error);
+    }
+  }
+
   Future<String> addNewService(Service service) async {
     try {
       DocumentReference docRefe = await firestoreAdmin
