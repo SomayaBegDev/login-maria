@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:maria/cpanel/UI/AddAndRemove.dart';
 import 'package:maria/cpanel/UI/Process.dart';
 import 'package:maria/cpanel/UI/ShowBooking.dart';
-import 'package:maria/model/Staff.dart';
+import 'package:maria/cpanel/model/Staff.dart';
 import 'AddAndRemove.dart';
 import '../../Constant/Images/ImagesAndConst.dart';
 import 'ShowBooking.dart';
+import 'ShowServices.dart';
+import 'ShowStaff.dart';
 
 class ControlPanel extends StatelessWidget {
   int selOrder = 0;
@@ -48,9 +50,12 @@ class ControlPanel extends StatelessWidget {
             ),
             onTap: () {
               selOrder = index;
-              if (selOrder == 0 || selOrder == 1) {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => AddAndRemove(selOrder)));
+              if (selOrder == 0) {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => ShowStaff()));
+              } else if (selOrder == 1) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ShowServices()));
               } else {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ShowBooking()));

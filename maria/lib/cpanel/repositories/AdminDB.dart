@@ -1,10 +1,9 @@
 import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:maria/Constant/Names.dart';
-import 'package:maria/model/Service.dart';
+import 'package:maria/cpanel/model/Service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
-import 'package:maria/model/Staff.dart';
+import 'package:maria/cpanel/model/Staff.dart';
 
 class AdminDB {
   AdminDB._();
@@ -23,13 +22,23 @@ class AdminDB {
     }
   }
 
-  Future<List<DocumentSnapshot>> getAllServices() async {
+  /* Future<List<DocumentSnapshot>> getAllServices() async {
     try {
       QuerySnapshot querySnapshot =
           await firestoreAdmin.collection(serviceCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
       mySnackBar(error: error);
+    }
+  }*/
+
+  Future<List<DocumentSnapshot>> getAllServices() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await firestoreAdmin.collection(serviceCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      print(error);
     }
   }
 

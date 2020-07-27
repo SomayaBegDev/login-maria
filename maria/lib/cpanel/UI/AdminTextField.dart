@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:maria/cpanel/UI/Process.dart';
+import 'package:maria/cpanel/UI/ShowStaff.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:provider/provider.dart';
 
 class AdminTextField extends StatelessWidget {
+  Icon icon;
   String label;
   textFieldType type;
-  AdminTextField({this.label, this.type});
+  AdminTextField({this.label, this.type, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,7 @@ class AdminTextField extends StatelessWidget {
 
     return TextField(
       onChanged: (value) {
-        if (type == textFieldType.name) {
-          adminProvider.setServiceName(value);
-        } else if (type == textFieldType.fee) {
-          adminProvider.setFee(value);
-        } else if (type == textFieldType.staffname) {
+        if (type == textFieldType.staffname) {
           adminProvider.setStaffName(value);
         } else if (type == textFieldType.email) {
           adminProvider.setStaffEmail(value);
@@ -27,11 +24,8 @@ class AdminTextField extends StatelessWidget {
           adminProvider.setStaffPassword(value);
         }
       },
-      keyboardType:
-          type == textFieldType.fee ? TextInputType.number : TextInputType.text,
-      decoration: InputDecoration(
-        labelText: this.label,
-      ),
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(labelText: this.label, icon: this.icon),
     );
   }
 }

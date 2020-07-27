@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
-import 'package:maria/model/Service.dart';
+import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/repositories/AdminDB.dart';
 import 'package:maria/cpanel/repositories/AdminRep.dart';
-import 'package:maria/model/Staff.dart';
+import 'package:maria/cpanel/model/Staff.dart';
 
 class AdminProvider extends ChangeNotifier {
   //Service Section
@@ -34,10 +34,10 @@ class AdminProvider extends ChangeNotifier {
     try {
       List<Service> services = await AdminRep.adminRep.getAllServices();
       this.allServices = services;
+
       notifyListeners();
-      return this.allServices;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -88,7 +88,6 @@ class AdminProvider extends ChangeNotifier {
       List<Staff> staff = await AdminRep.adminRep.getAllStaff();
       this.allStaff = staff;
       notifyListeners();
-      return this.allStaff;
     } catch (error) {
       mySnackBar(error: error);
     }
