@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:maria/cpanel/model/User.dart';
+import 'package:maria/user/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 
 import 'Services.dart';
 
 class Registration extends StatelessWidget {
+  String username, pass, email;
+  String userPass1 = "";
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffff6ea1),
@@ -24,6 +31,13 @@ class Registration extends StatelessWidget {
             Container(
               constraints: BoxConstraints(maxWidth: 400),
               child: TextFormField(
+                validator: (usern) {
+                  return usern == null ? "This field is required" : "";
+                },
+                onChanged: (usern) {
+                  this.username = usern;
+                  userProvider.setUserName(usern);
+                },
                 decoration: const InputDecoration(
                   icon: Icon(
                     Icons.person,
@@ -39,6 +53,12 @@ class Registration extends StatelessWidget {
             Container(
               constraints: BoxConstraints(maxWidth: 400),
               child: TextFormField(
+                validator: (userp) {
+                  return userp == null ? "This field is required" : "";
+                },
+                onChanged: (userp) {
+                  this.userPass1 = userp;
+                },
                 decoration: const InputDecoration(
                   icon: Icon(
                     Icons.vpn_key,
@@ -54,6 +74,21 @@ class Registration extends StatelessWidget {
             Container(
               constraints: BoxConstraints(maxWidth: 400),
               child: TextFormField(
+                validator: (userp) {
+                  String res = "";
+                  if (userp != null) {
+                    if (this.userPass1 != userp) {
+                      res = "Enter the same password";
+                    }
+                  } else {
+                    res = "This field is required";
+                  }
+                  return res;
+                },
+                onChanged: (userp) {
+                  this.pass = userp;
+                  userProvider.setUserPassword(userp);
+                },
                 decoration: const InputDecoration(
                   icon: Icon(
                     Icons.vpn_key,
@@ -69,6 +104,15 @@ class Registration extends StatelessWidget {
             Container(
               constraints: BoxConstraints(maxWidth: 400),
               child: TextFormField(
+                validator: (userE) {
+                  return userE.contains("@")
+                      ? ""
+                      : "Please enter a correct email";
+                },
+                onChanged: (userE) {
+                  this.email = userE;
+                  userProvider.setUserEmail(userE);
+                },
                 decoration: const InputDecoration(
                   icon: Icon(
                     Icons.email,
@@ -87,9 +131,17 @@ class Registration extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Services(),
-                  ));
+                  if (this.username != null &&
+                      this.pass != null &&
+                      this.userPass1 != null &&
+                      this.userPass1 == this.pass &&
+                      this.email != null &&
+                      email.contains(('@'))) {
+                    userProvider.addNewUser();
+                  } else {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => Services()));
+                  }
                 },
                 color: Color(0xffff6ea1),
                 child: Text(

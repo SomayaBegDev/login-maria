@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:maria/cpanel/UI/ControlPanel.dart';
 import 'Services.dart';
 
 class MainScreen extends StatelessWidget {
@@ -14,8 +13,8 @@ class MainScreen extends StatelessWidget {
         body: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => ControlPanel()));
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => Services()));
             },
             child: Container(
               width: 200.0,

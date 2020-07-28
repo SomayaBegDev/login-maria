@@ -20,6 +20,26 @@ class UserFB {
     }
   }
 
+  Future<List<DocumentSnapshot>> getAllServices() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await firestoreUser.collection(serviceCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  Future<List<DocumentSnapshot>> getAllStaff() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await firestoreUser.collection(staffCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
   Future<List<DocumentSnapshot>> getAllUsers() async {
     try {
       QuerySnapshot querySnapshot =

@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../Constant/Images/ImagesMaps.dart';
+import 'package:maria/user/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 import 'MyService.dart';
 
 class Services extends StatelessWidget {
@@ -8,24 +10,23 @@ class Services extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final data = MediaQuery.of(context);
-
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffff6ea1),
         title: Text(
-          'Services',
+          'Services ${userProvider.allServices.length}',
           style: TextStyle(color: Colors.white),
         ),
       ),
       body: GridView.builder(
-        itemCount: servicesImages.length,
+        itemCount: userProvider.allServices.length,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 500, crossAxisSpacing: 50, childAspectRatio: 2),
         itemBuilder: (context, index) {
           return GestureDetector(
             child: Container(
-              // constraints: BoxConstraints(minWidth: 200, maxHeight: 100),
               padding: EdgeInsets.all(3),
               margin: EdgeInsets.all(5),
               child: Center(
@@ -33,10 +34,22 @@ class Services extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    child: Image.asset(servicesImages.values.toList()[index]),
+                    child: CachedNetworkImage(
+                      imageUrl: userProvider.allServices[index].imageURL,
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
                   ),
                   Text(
-                    servicesImages.keys.toList()[index],
+                    userProvider.allServices[index].name,
+                    style: TextStyle(
+                      color: const Color(0xffff6ea1),
+                      fontSize: 20,
+                    ),
+                  ),
+                  Text(
+                    "Fee : ${userProvider.allServices[index].fee}",
                     style: TextStyle(
                       color: const Color(0xffff6ea1),
                       fontSize: 20,
