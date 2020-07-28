@@ -1,39 +1,30 @@
 import 'dart:io';
-
+import 'package:maria/Constant/Names.dart';
+import 'package:maria/user/model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
-import 'package:maria/Constant/Names.dart';
-import 'package:maria/user/model/UserBooking.dart';
 
 class UserFB {
   UserFB._();
   static final UserFB userFB = UserFB._();
   Firestore firestoreUser = Firestore.instance;
 
-  Future<String> addNewBooking(Booking booking) async {
+  //User operation
+  Future<String> addNewUser(User user) async {
     try {
-      DocumentReference documentReference =
-          await firestoreUser.collection(bookingCollname).add(booking.toJson());
-      return documentReference.documentID;
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  editBooking(Booking booking) async {
-    try {
-      firestoreUser
-          .collection(bookingCollname)
-          .document(booking.documentId)
-          .setData(booking.toJson());
+      DocumentReference docRefe =
+          await firestoreUser.collection(userCollname).add(user.toJson());
+      return docRefe.documentID;
     } catch (error) {
       mySnackBar(error: error);
     }
   }
 
-  deleteBooking(String documentId) async {
+  Future<List<DocumentSnapshot>> getAllUsers() async {
     try {
-      firestoreUser.collection(bookingCollname).document(documentId).delete();
+      QuerySnapshot querySnapshot =
+          await firestoreUser.collection(userCollname).getDocuments();
+      return querySnapshot.documents;
     } catch (error) {
       mySnackBar(error: error);
     }
