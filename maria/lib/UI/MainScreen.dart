@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Services.dart';
+import 'Login.dart';
 
 class MainScreen extends StatelessWidget {
   MainScreen({
@@ -14,7 +14,7 @@ class MainScreen extends StatelessWidget {
           child: GestureDetector(
             onTap: () {
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Services()));
+                  .push(MaterialPageRoute(builder: (context) => Login()));
             },
             child: Container(
               width: 200.0,
