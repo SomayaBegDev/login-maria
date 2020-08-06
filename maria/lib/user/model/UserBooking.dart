@@ -1,36 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Booking {
+class UserBooking {
   String documentId;
-  String userID;
-  String staffID;
-  String serviceID;
-  String date;
+  String userNmae;
+  String staffName;
+  String service;
+  DateTime date;
   String time;
-  String confirmation;
+  int confirmation;
 
-  Booking(
+  UserBooking(
       {this.documentId,
-      this.userID,
-      this.staffID,
-      this.serviceID,
+      this.userNmae,
+      this.staffName,
+      this.service,
       this.date,
       this.time,
       this.confirmation});
-  Booking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
+  UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
     this.documentId = docSnapShot.documentID;
-    this.userID = docSnapShot.data['userID'];
-    this.serviceID = docSnapShot.data['serviceID'];
-    this.staffID = docSnapShot.data['staffID'];
+    this.userNmae = docSnapShot.data['userNmae'];
+    this.service = docSnapShot.data['service'];
+    this.staffName = docSnapShot.data['staffName'];
     this.date = docSnapShot.data['date'];
     this.time = docSnapShot.data['time'];
     this.confirmation = docSnapShot.data['confirmation'];
   }
   toJson() {
     return {
-      'userId': this.userID,
-      'serviceId': this.serviceID,
-      'staffId': this.staffID,
+      'userId': this.userNmae,
+      'serviceId': this.service,
+      'staffId': this.staffName,
       'date': this.date,
       'time': this.time,
       'confirmation': this.confirmation

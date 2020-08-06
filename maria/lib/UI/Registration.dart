@@ -3,7 +3,7 @@ import 'package:maria/cpanel/model/User.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 
-import 'Services.dart';
+import '../user/UI/Services.dart';
 
 class Registration extends StatelessWidget {
   String username, pass, email;

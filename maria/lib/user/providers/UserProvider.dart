@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
+import 'package:maria/Constant/Names.dart';
 import 'package:maria/user/model/User.dart';
 import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/UserStaff.dart';
+import 'package:maria/user/model/UserBooking.dart';
 import 'package:maria/user/repositories/UserFB.dart';
 import 'package:maria/user/repositories/UserRep.dart';
 
@@ -32,8 +34,8 @@ class UserProvider extends ChangeNotifier {
         username: this.userName,
         email: this.userEmail,
         password: this.userPassword);
-    String staffId = await UserFB.userFB.addNewUser(user);
-    if (staffId != null) {
+    String userId = await UserFB.userFB.addNewUser(user);
+    if (userId != null) {
       getAllUser();
       return true;
     } else {
@@ -71,6 +73,66 @@ class UserProvider extends ChangeNotifier {
       List<UserStaff> staff = await UserRep.userRep.getAllStaff();
       this.allStaff = staff;
       notifyListeners();
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  //booking section
+  List<UserBooking> allBooking = [];
+  String staffName;
+  String service;
+  DateTime date;
+  String time;
+  int confirmation;
+
+  setStaffName(String stName) {
+    this.staffName = stName;
+  }
+
+  setService(String aService) {
+    this.service = aService;
+  }
+
+  setDate(DateTime date) {
+    this.date = date;
+  }
+
+  setTime(String time) {
+    this.time = time;
+  }
+
+  setConfirmation(int conf) {
+    this.confirmation = conf;
+  }
+
+  Future<bool> addNewBooking() async {
+    UserBooking userBooking = UserBooking(
+        userNmae: this.userName,
+        staffName: this.staffName,
+        service: this.service,
+        date: this.date,
+        time: this.time,
+        confirmation: this.confirmation);
+    String bookingId = await UserFB.userFB.addNewBookinf(userBooking);
+    if (bookingId != null) {
+      getAllUser();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getAllBooking() async {
+    try {
+      List<UserBooking> userBooking = await UserRep.userRep.getAllBooking();
+
+      for (int i = 0; i < userBooking.length; i++) {
+        if (userBooking[i].userNmae == this.userName) {
+          this.allBooking = userBooking;
+          notifyListeners();
+        }
+      }
     } catch (error) {
       mySnackBar(error: error);
     }

@@ -52,7 +52,7 @@ class AdminStaff extends StatelessWidget {
                                     labelText: "${staff.staffname} new email",
                                     labelStyle: TextStyle(color: appBarColor),
                                   ),
-                                  onSaved: (val) {
+                                  onChanged: (val) {
                                     Provider.of<AdminProvider>(context,
                                             listen: false)
                                         .setStaffEmail(val);

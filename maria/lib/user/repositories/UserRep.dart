@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
+import 'package:maria/user/model/UserBooking.dart';
 import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/User.dart';
 import 'package:maria/user/model/UserStaff.dart';
@@ -45,6 +46,21 @@ class UserRep {
           documents.map((e) => UserStaff.fromDocumetSnapshot(e)).toList();
 
       return staff;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  //booking section
+
+  Future<List<UserBooking>> getAllBooking() async {
+    try {
+      List<DocumentSnapshot> documents = await UserFB.userFB.getAllBooking();
+
+      List<UserBooking> booking =
+          documents.map((e) => UserBooking.fromDocumetSnapshot(e)).toList();
+
+      return booking;
     } catch (error) {
       mySnackBar(error: error);
     }

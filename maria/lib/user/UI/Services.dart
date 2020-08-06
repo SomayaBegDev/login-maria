@@ -30,9 +30,9 @@ class Services extends StatelessWidget {
             } else {
               return GridView.builder(
                 itemCount: allServices.length,
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 500,
-                    crossAxisSpacing: 50,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 15,
                     childAspectRatio: 2),
                 itemBuilder: (context, index) {
                   return GestureDetector(
@@ -71,6 +71,8 @@ class Services extends StatelessWidget {
                     ),
                     onTap: () {
                       selIndex = index;
+                      Provider.of<UserProvider>(context, listen: false)
+                          .setService(allServices[selIndex].name);
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => MyService(selIndex)));
                     },

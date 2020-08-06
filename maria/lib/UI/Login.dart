@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:maria/UI/MainScreen.dart';
-import 'package:maria/UI/Services.dart';
+import 'package:maria/MainScreen.dart';
+import 'package:maria/user/UI/Services.dart';
 
 import 'Registration.dart';
 

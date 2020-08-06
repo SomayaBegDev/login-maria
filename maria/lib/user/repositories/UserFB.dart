@@ -3,6 +3,7 @@ import 'package:maria/Constant/Names.dart';
 import 'package:maria/user/model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
+import 'package:maria/user/model/UserBooking.dart';
 
 class UserFB {
   UserFB._();
@@ -44,6 +45,27 @@ class UserFB {
     try {
       QuerySnapshot querySnapshot =
           await firestoreUser.collection(userCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  //booking operation
+  Future<String> addNewBookinf(UserBooking booking) async {
+    try {
+      DocumentReference docRefe =
+          await firestoreUser.collection(bookingCollname).add(booking.toJson());
+      return docRefe.documentID;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  Future<List<DocumentSnapshot>> getAllBooking() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await firestoreUser.collection(bookingCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
       mySnackBar(error: error);

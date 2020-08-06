@@ -6,9 +6,38 @@ import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:provider/provider.dart';
 
 class AdminService extends StatelessWidget {
+  double newFee = 0;
   GlobalKey<FormState> formKey = GlobalKey();
   Service service;
+
   AdminService({this.service});
+
+  editService(BuildContext context, String fee) {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      try {
+        Provider.of<AdminProvider>(context, listen: false).setFee(fee);
+        Navigator.pop(context);
+      } catch (error) {
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Text(error.toString()),
+                actions: <Widget>[
+                  FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text("Got it"),
+                  )
+                ],
+              );
+            });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -47,18 +76,18 @@ class AdminService extends StatelessWidget {
                                     if (val.isEmpty) {
                                       return "This field is required";
                                     } else {
+                                      newFee = double.parse(val);
                                       return null;
                                     }
                                   },
-                                  keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
-                                    labelText: "${service.name} new fee",
-                                    labelStyle: TextStyle(color: appBarColor),
+                                    labelText: "${service.name} New Fee",
                                   ),
                                   onSaved: (val) {
+                                    //code to add
                                     Provider.of<AdminProvider>(context,
                                             listen: false)
-                                        .setFee(val);
+                                        .setFee("${newFee}");
                                   },
                                 ),
                               ),
@@ -66,15 +95,11 @@ class AdminService extends StatelessWidget {
                           ],
                           cancelButton: CupertinoActionSheetAction(
                             onPressed: () {
-                              Provider.of<AdminProvider>(context, listen: false)
-                                  .editService(service);
+                              editService(context, "${newFee}");
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              child: Text(
-                                "Edit Service",
-                                style: TextStyle(color: appBarColor),
-                              ),
+                              child: Text("Edit service"),
                             ),
                           ),
                         ),
