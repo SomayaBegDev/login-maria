@@ -28,9 +28,9 @@ class UserBooking {
   }
   toJson() {
     return {
-      'userId': this.userNmae,
-      'serviceId': this.service,
-      'staffId': this.staffName,
+      'userNmae': this.userNmae,
+      'service': this.service,
+      'staffName': this.staffName,
       'date': this.date,
       'time': this.time,
       'confirmation': this.confirmation

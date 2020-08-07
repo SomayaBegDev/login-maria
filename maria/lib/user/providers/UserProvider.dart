@@ -80,6 +80,7 @@ class UserProvider extends ChangeNotifier {
 
   //booking section
   List<UserBooking> allBooking = [];
+  List<UserBooking> bookingForAllUser = [];
   String staffName;
   String service;
   DateTime date;
@@ -133,6 +134,16 @@ class UserProvider extends ChangeNotifier {
           notifyListeners();
         }
       }
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  getBookingForAllUser() async {
+    try {
+      List<UserBooking> allUsersBooking = await UserRep.userRep.getAllBooking();
+      this.bookingForAllUser = allUsersBooking;
+      notifyListeners();
     } catch (error) {
       mySnackBar(error: error);
     }
