@@ -37,17 +37,18 @@ class MyService extends StatelessWidget {
     return allstaffList;
   }
 
-  bool isAvailable(
-      List<UserBooking> booFAU, String aStName, DateTime aDate, String aTime) {
-    for (int i = 0; i < booFAU.length; i++) {
-      if (booFAU[i].staffName == aStName &&
-          booFAU[i].date == aDate &&
-          booFAU[i].time == aTime) {
-        return false;
-      } else {
-        return true;
+  bool isAvailable(List<UserBooking> bookingFAU, String stName, DateTime aDate,
+      String aTime) {
+    bool res = true;
+    for (int i = 0; i < bookingFAU.length; i++) {
+      if (bookingFAU[i].staffName == stName &&
+          bookingFAU[i].date == aDate &&
+          bookingFAU[i].time == aTime) {
+        res = false;
+        break;
       }
     }
+    return res;
   }
 
   @override
