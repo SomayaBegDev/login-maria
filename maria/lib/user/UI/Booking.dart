@@ -1,33 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/Images/ImagesMaps.dart';
+import 'package:maria/user/model/UserBooking.dart';
+import 'package:maria/user/providers/UserProvider.dart';
+import 'package:provider/provider.dart';
 
 class Booking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: const Color(0xffff6ea1),
-          title: Text(
-            'Booking',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-        body: Container(
+    UserProvider userProv = Provider.of<UserProvider>(context, listen: false);
+    userProv.getAllBooking();
+    return Consumer<UserProvider>(builder: (context, value, child) {
+      List<UserBooking> allBooking = value.allBooking;
+      if (allBooking.isEmpty) {
+        return Center(
+          child: Text('No booked services yet '),
+        );
+      } else {
+        return Container(
           child: Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(
-                    child: Image.asset(servicesImages.values.toList()[1]),
-                  ),
+                  Expanded(child: CachedNetworkImage()),
                   Expanded(
                     child: Column(
                       children: <Widget>[
                         Row(
                           children: <Widget>[
                             Text(
-                              servicesImages.keys.toList()[1],
+                              allBooking[0].service,
                               style: TextStyle(
                                 fontSize: 20,
                               ),
@@ -48,7 +51,7 @@ class Booking extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              "Staff name",
+                              allBooking[0].staffName,
                               style: TextStyle(
                                   fontSize: 15, color: Colors.black45),
                             ),
@@ -68,7 +71,7 @@ class Booking extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              "Date",
+                              allBooking[0].date.toString(),
                               style: TextStyle(
                                   fontSize: 15, color: Colors.black45),
                             ),
@@ -88,7 +91,9 @@ class Booking extends StatelessWidget {
                               width: 5,
                             ),
                             Text(
-                              "Statues",
+                              allBooking[0].confirmation == 0
+                                  ? "Unconfirmed"
+                                  : "Confirmed",
                               style: TextStyle(
                                   fontSize: 15, color: Colors.black45),
                             ),
@@ -102,7 +107,9 @@ class Booking extends StatelessWidget {
                             RaisedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              onPressed: () {},
+                              onPressed: () {
+                                userProv.setConfirmation(1);
+                              },
                               color: Color(0xffff6ea1),
                               child: Text(
                                 "Confirm",
@@ -111,12 +118,14 @@ class Booking extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              width: 5,
+                              width: 2,
                             ),
                             RaisedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              onPressed: () {},
+                              onPressed: () {
+                                //userProv.
+                              },
                               color: Colors.black12,
                               child: Text(
                                 "Remove",
@@ -133,6 +142,9 @@ class Booking extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        );
+      }
+    });
   }
 }
+/**/

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/user/UI/Services.dart';
+import 'package:maria/user/UI/UserMainScreen.dart';
 import 'package:maria/user/model/UserBooking.dart';
 import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/UserStaff.dart';
@@ -80,12 +81,12 @@ class MyService extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 30,
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
+                        SizedBox(
+                          height: 40,
+                        ),
                         Text(
                           "Service",
                           style: TextStyle(
@@ -147,38 +148,29 @@ class MyService extends StatelessWidget {
                   height: 10,
                 ),*/
 
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Date",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Expanded(
-                          child: Container(
-                            constraints:
-                                BoxConstraints(maxWidth: 100, maxHeight: 690),
-                            child: TableCalendar(
-                              calendarStyle: CalendarStyle(
-                                  todayColor: Colors.black12,
-                                  todayStyle: TextStyle(color: Colors.black),
-                                  weekdayStyle: TextStyle(color: appBarColor),
-                                  selectedColor: appBarColor,
-                                  selectedStyle:
-                                      TextStyle(color: Colors.black)),
-                              calendarController: _controller,
-                              onDaySelected: (date, event) {
-                                selectedDate = date;
-                              },
-                            ),
-                          ),
-                        )
-                      ],
+                    Text(
+                      "Date",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    Flexible(
+                      child: TableCalendar(
+                        initialCalendarFormat: CalendarFormat.twoWeeks,
+                        availableCalendarFormats: {
+                          CalendarFormat.twoWeeks: "TwoWeeks"
+                        },
+                        calendarStyle: CalendarStyle(
+                            todayColor: Colors.black12,
+                            todayStyle: TextStyle(color: Colors.black),
+                            weekdayStyle: TextStyle(color: appBarColor),
+                            selectedColor: appBarColor,
+                            selectedStyle: TextStyle(color: Colors.black)),
+                        calendarController: _controller,
+                        onDaySelected: (date, event) {
+                          selectedDate = date;
+                        },
+                      ),
                     ),
                     SizedBox(
                       height: 10,
@@ -233,15 +225,10 @@ class MyService extends StatelessWidget {
                           userProvider.setUserName("somaya");
 
                           userProvider.addNewBooking();
-
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Booking(),
-                          ));
-                        } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Services(),
-                          ));
                         }
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => UserMainScreen(),
+                        ));
 
                         /*Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Booking(),

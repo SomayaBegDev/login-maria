@@ -123,6 +123,10 @@ class UserProvider extends ChangeNotifier {
       return false;
     }
   }
+  /*deleteBooking(String documentId) async {
+    await UserFB.userFB.de
+    getAllServices();
+  }*/
 
   getAllBooking() async {
     try {

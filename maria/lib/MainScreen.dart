@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maria/user/UI/Services.dart';
 import 'package:maria/cpanel/UI/ControlPanel.dart';
+import 'package:maria/user/UI/UserMainScreen.dart';
 import 'UI/Login.dart';
 
 class MainScreen extends StatelessWidget {
@@ -15,8 +16,8 @@ class MainScreen extends StatelessWidget {
         body: Center(
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => Services()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => UserMainScreen()));
             },
             child: Container(
               width: 200.0,
