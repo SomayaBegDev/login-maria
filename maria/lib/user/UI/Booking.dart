@@ -23,7 +23,7 @@ class Booking extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(child: CachedNetworkImage()),
+                  //Expanded(child: CachedNetworkImage()),
                   Expanded(
                     child: Column(
                       children: <Widget>[
