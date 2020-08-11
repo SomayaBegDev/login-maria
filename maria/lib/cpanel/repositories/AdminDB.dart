@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:maria/Constant/Names.dart';
+import 'package:maria/cpanel/model/Admin.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
@@ -103,6 +104,46 @@ class AdminDB {
   deleteStaff(String documentId) async {
     try {
       firestoreAdmin.collection(staffCollname).document(documentId).delete();
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  //Admin operation
+  Future<String> addNewAdmin(Admin admin) async {
+    try {
+      DocumentReference docRefe =
+          await firestoreAdmin.collection(adminCollname).add(admin.toJson());
+      return docRefe.documentID;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  Future<List<DocumentSnapshot>> getAllAdmin() async {
+    try {
+      QuerySnapshot querySnapshot =
+          await firestoreAdmin.collection(adminCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  editAdmin(Admin admin) async {
+    try {
+      firestoreAdmin
+          .collection(adminCollname)
+          .document(admin.documentId)
+          .setData(admin.toJson());
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  deleteAdmin(String documentId) async {
+    try {
+      firestoreAdmin.collection(adminCollname).document(documentId).delete();
     } catch (error) {
       mySnackBar(error: error);
     }

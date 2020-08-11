@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
+import 'package:maria/cpanel/model/Admin.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/repositories/AdminDB.dart';
 import 'package:maria/cpanel/repositories/AdminRep.dart';
@@ -112,5 +113,57 @@ class AdminProvider extends ChangeNotifier {
   editStaff(Staff staff) async {
     await AdminDB.adminDB.editStaff(staff);
     getAllStaff();
+  }
+
+  //Admin section
+  List<Admin> allAdmin = [];
+  String adminName;
+  String adminEmail;
+  String adminPassword;
+
+  setAdminName(String adminName) {
+    this.adminName = adminName;
+  }
+
+  setAdminEmail(String adminEmail) {
+    this.adminEmail = adminEmail;
+  }
+
+  setAdminPassword(String adminPassword) {
+    this.adminPassword = adminPassword;
+  }
+
+  Future<bool> addNewAdmin() async {
+    Admin admin = Admin(
+        adminname: this.adminName,
+        email: this.adminEmail,
+        password: this.adminPassword);
+    String adminId = await AdminDB.adminDB.addNewAdmin(admin);
+    if (adminId != null) {
+      getAllAdmin();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getAllAdmin() async {
+    try {
+      List<Admin> admin = await AdminRep.adminRep.getAllAdmin();
+      this.allAdmin = admin;
+      notifyListeners();
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
+
+  deleteAdmin(String documentId) async {
+    await AdminDB.adminDB.deleteAdmin(documentId);
+    getAllAdmin();
+  }
+
+  editAdmin(Admin admin) async {
+    await AdminDB.adminDB.editAdmin(admin);
+    getAllAdmin();
   }
 }
