@@ -8,7 +8,7 @@ import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:maria/cpanel/UI/AdminTextField.dart';
 import 'package:provider/provider.dart';
 
-class ShowStaff extends StatelessWidget {
+class ShowAdmins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -32,13 +32,11 @@ class ShowStaff extends StatelessWidget {
   }
 }
 
-
-
 class AddNewAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AdminProvider adminProvider =
-    Provider.of<AdminProvider>(context, listen: false);
+        Provider.of<AdminProvider>(context, listen: false);
     // TODO: implement build
     return Container(
       child: Center(
@@ -56,8 +54,7 @@ class AddNewAdmin extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: "Admin Name *",
                 ),
-              )
-          ),
+              )),
           SizedBox(
             height: 10,
           ),
@@ -71,8 +68,7 @@ class AddNewAdmin extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: "Email Address *",
                 ),
-              )
-          ),
+              )),
           SizedBox(
             height: 10,
           ),
@@ -123,7 +119,8 @@ class AddNewAdmin extends StatelessWidget {
 class AllAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    AdminProvider adminProvider = Provider.of<AdminProvider>(context, listen: false);
+    AdminProvider adminProvider =
+        Provider.of<AdminProvider>(context, listen: false);
     adminProvider.getAllAdmin();
     // TODO: implement build
     return Consumer<AdminProvider>(

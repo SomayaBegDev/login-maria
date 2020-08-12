@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maria/cpanel/UI/ShowBooking.dart';
-import 'package:maria/cpanel/model/Staff.dart';
 import '../../Constant/Images/ImagesAndConst.dart';
+import 'ShowAdmins.dart';
 import 'ShowBooking.dart';
 import 'ShowServices.dart';
 import 'ShowStaff.dart';
@@ -53,6 +53,9 @@ class ControlPanel extends StatelessWidget {
               } else if (selOrder == 1) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ShowServices()));
+              } else if (selOrder == 2) {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ShowAdmins()));
               } else {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ShowBooking()));

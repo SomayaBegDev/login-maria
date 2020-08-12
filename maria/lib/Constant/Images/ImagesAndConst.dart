@@ -1,9 +1,10 @@
 Map<String, String> cPannelMain = {
   "Staff": "assets/images/circle/Staff.png",
   "Services": "assets/images/circle/Services.png",
-  "Booking": "assets/images/circle/Booking.png",
+  "Admin":"assets/images/circle/Admin.png",
+      "Booking": "assets/images/circle/Booking.png",
 };
-List<String> staffAndServices = ["Staff","Services"];
+List<String> staffAndServices = ["Staff", "Services","Admin"];
 
 Map<String, String> addAndRemove = {
   "Add": "assets/images/circle/Add.png",
