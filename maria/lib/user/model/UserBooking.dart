@@ -5,6 +5,7 @@ class UserBooking {
   String userNmae;
   String staffName;
   String service;
+  String imageURL;
   DateTime date;
   String time;
   int confirmation;
@@ -14,6 +15,7 @@ class UserBooking {
       this.userNmae,
       this.staffName,
       this.service,
+      this.imageURL,
       this.date,
       this.time,
       this.confirmation});
@@ -21,6 +23,7 @@ class UserBooking {
     this.documentId = docSnapShot.documentID;
     this.userNmae = docSnapShot.data['userNmae'];
     this.service = docSnapShot.data['service'];
+    this.imageURL = docSnapShot.data['imageUrl'];
     this.staffName = docSnapShot.data['staffName'];
     this.date = docSnapShot.data['date'];
     this.time = docSnapShot.data['time'];
@@ -30,6 +33,7 @@ class UserBooking {
     return {
       'userNmae': this.userNmae,
       'service': this.service,
+      'imageUrl': this.imageURL,
       'staffName': this.staffName,
       'date': this.date,
       'time': this.time,

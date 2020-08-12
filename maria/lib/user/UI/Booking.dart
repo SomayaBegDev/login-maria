@@ -10,7 +10,7 @@ class Booking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider userProv = Provider.of<UserProvider>(context, listen: false);
-    userProv.getAllBooking();
+    userProv.allBooking;
     return Consumer<UserProvider>(builder: (context, value, child) {
       List<UserBooking> allBooking = value.allBooking;
       if (allBooking.isEmpty) {
@@ -23,7 +23,10 @@ class Booking extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  //Expanded(child: CachedNetworkImage()),
+                  Expanded(
+                      child: CachedNetworkImage(
+                    imageUrl: allBooking[0].imageURL,
+                  )),
                   Expanded(
                     child: Column(
                       children: <Widget>[

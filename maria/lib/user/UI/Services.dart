@@ -67,6 +67,7 @@ class Services extends StatelessWidget {
                   selIndex = index;
                   userProvider.setService(allServices[selIndex].name);
                   userProvider.setUserName(this.uName);
+                  userProvider.setImageURL(allServices[index].imageURL);
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyService(selIndex)));
                 },

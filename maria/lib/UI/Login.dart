@@ -113,8 +113,7 @@ class Login extends StatelessWidget {
                     bool isaAdmin = isAdmin(this.uName, this.upass, allAdmin);
                     if (isAUser) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) =>
-                            UserMainScreen(username: this.uName),
+                        builder: (context) => UserMainScreen(),
                       ));
                     } else if (isaAdmin) {
                       Navigator.of(context).push(MaterialPageRoute(

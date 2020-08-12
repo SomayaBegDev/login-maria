@@ -227,10 +227,6 @@ class MyService extends StatelessWidget {
                         Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => UserMainScreen(),
                         ));
-
-                        /*Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Booking(),
-                        ));*/
                       },
                       color: Color(0xffff6ea1),
                       child: Text(

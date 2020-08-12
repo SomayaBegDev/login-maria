@@ -7,7 +7,7 @@ import 'Services.dart';
 
 class UserMainScreen extends StatelessWidget {
   String username;
-  UserMainScreen({this.username});
+  UserMainScreen();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -16,7 +16,7 @@ class UserMainScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: appBarColor,
-            title: Text('Welcome , ${this.username}'),
+            title: Text('Welcome , '),
             bottom: TabBar(tabs: [
               Tab(
                 text: 'Services',

@@ -83,6 +83,7 @@ class UserProvider extends ChangeNotifier {
   List<UserBooking> bookingForAllUser = [];
   String staffName;
   String service;
+  String imageURL;
   DateTime date;
   String time;
   int confirmation;
@@ -107,11 +108,16 @@ class UserProvider extends ChangeNotifier {
     this.confirmation = conf;
   }
 
+  setImageURL(String imURL) {
+    this.imageURL = imURL;
+  }
+
   Future<bool> addNewBooking() async {
     UserBooking userBooking = UserBooking(
         userNmae: this.userName,
         staffName: this.staffName,
         service: this.service,
+        imageURL: this.imageURL,
         date: this.date,
         time: this.time,
         confirmation: this.confirmation);
@@ -151,7 +157,7 @@ class UserProvider extends ChangeNotifier {
       this.bookingForAllUser = allUsersBooking;
       notifyListeners();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 }
