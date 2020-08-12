@@ -8,10 +8,14 @@ import 'MyService.dart';
 
 class Services extends StatelessWidget {
   int selIndex = 0;
+  String uName;
+  Services(this.uName);
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<UserProvider>(context, listen: false).getAllServices();
+    UserProvider userProvider =
+        Provider.of<UserProvider>(context, listen: false);
+    userProvider.getAllServices();
     return Consumer<UserProvider>(
       builder: (context, value, child) {
         List<UserService> allServices = value.allServices;
@@ -61,8 +65,8 @@ class Services extends StatelessWidget {
                 ),
                 onTap: () {
                   selIndex = index;
-                  Provider.of<UserProvider>(context, listen: false)
-                      .setService(allServices[selIndex].name);
+                  userProvider.setService(allServices[selIndex].name);
+                  userProvider.setUserName(this.uName);
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => MyService(selIndex)));
                 },

@@ -13,6 +13,7 @@ import 'Registration.dart';
 class Login extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
+
   String uName;
   String upass;
 
@@ -112,11 +113,12 @@ class Login extends StatelessWidget {
                     bool isaAdmin = isAdmin(this.uName, this.upass, allAdmin);
                     if (isAUser) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => UserMainScreen(),
+                        builder: (context) =>
+                            UserMainScreen(username: this.uName),
                       ));
                     } else if (isaAdmin) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ControlPanel(),
+                        builder: (context) => ControlPanel(this.uName),
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(

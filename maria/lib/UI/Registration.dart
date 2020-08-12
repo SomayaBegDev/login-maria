@@ -139,8 +139,8 @@ class Registration extends StatelessWidget {
                       email.contains(('@'))) {
                     userProvider.addNewUser();
                   } else {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => Services()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => Services(this.username)));
                   }
                 },
                 color: Color(0xffff6ea1),

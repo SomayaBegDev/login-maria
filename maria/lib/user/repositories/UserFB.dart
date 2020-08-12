@@ -71,4 +71,12 @@ class UserFB {
       mySnackBar(error: error);
     }
   }
+
+  deleteBooking(String documentId) async {
+    try {
+      firestoreUser.collection(bookingCollname).document(documentId).delete();
+    } catch (error) {
+      mySnackBar(error: error);
+    }
+  }
 }

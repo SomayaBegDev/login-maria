@@ -7,6 +7,8 @@ import 'ShowServices.dart';
 import 'ShowStaff.dart';
 
 class ControlPanel extends StatelessWidget {
+  String adminName;
+  ControlPanel(this.adminName);
   int selOrder = 0;
   @override
   Widget build(BuildContext context) {

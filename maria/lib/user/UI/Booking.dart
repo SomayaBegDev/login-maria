@@ -124,7 +124,8 @@ class Booking extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               onPressed: () {
-                                //userProv.
+                                userProv
+                                    .deleteBooking(allBooking[0].documentId);
                               },
                               color: Colors.black12,
                               child: Text(

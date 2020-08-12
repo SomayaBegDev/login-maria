@@ -222,8 +222,6 @@ class MyService extends StatelessWidget {
 
                           userProvider.setConfirmation(0);
 
-                          userProvider.setUserName("somaya");
-
                           userProvider.addNewBooking();
                         }
                         Navigator.of(context).push(MaterialPageRoute(
