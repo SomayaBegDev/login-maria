@@ -6,8 +6,8 @@ import 'package:maria/user/UI//Booking.dart';
 import 'Services.dart';
 
 class UserMainScreen extends StatelessWidget {
-  String username;
-  UserMainScreen();
+  String username = "";
+  UserMainScreen(this.username);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -16,7 +16,7 @@ class UserMainScreen extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: appBarColor,
-            title: Text('Welcome , '),
+            title: Text('Welcome , ${this.username}'),
             bottom: TabBar(tabs: [
               Tab(
                 text: 'Services',

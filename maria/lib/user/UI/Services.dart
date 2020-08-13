@@ -27,18 +27,22 @@ class Services extends StatelessWidget {
           return GridView.builder(
             itemCount: allServices.length,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, crossAxisSpacing: 15, childAspectRatio: 2),
+                crossAxisCount: 2, crossAxisSpacing: 5),
             itemBuilder: (context, index) {
               return GestureDetector(
                 child: Container(
-                  padding: EdgeInsets.all(3),
-                  margin: EdgeInsets.all(5),
+                  // padding: EdgeInsets.all(3),
+                  //margin: EdgeInsets.all(5),
                   child: Center(
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      SizedBox(
+                        height: 20,
+                      ),
                       Expanded(
                         child: CachedNetworkImage(
+                          // cacheManager: Ca,
                           imageUrl: allServices[index].imageURL,
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),
@@ -49,9 +53,9 @@ class Services extends StatelessWidget {
                       Text(
                         allServices[index].name,
                         style: TextStyle(
-                          color: const Color(0xffff6ea1),
-                          fontSize: 15,
-                        ),
+                            color: const Color(0xffff6ea1),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "Fee : ${allServices[index].fee}",
@@ -69,7 +73,7 @@ class Services extends StatelessWidget {
                   userProvider.setUserName(this.uName);
                   userProvider.setImageURL(allServices[index].imageURL);
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyService(selIndex)));
+                      builder: (context) => MyService(selIndex, this.uName)));
                 },
               );
             },

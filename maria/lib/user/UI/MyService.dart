@@ -14,7 +14,8 @@ import '../../Constant/Images/ImagesMaps.dart';
 
 class MyService extends StatelessWidget {
   int selectedService;
-  MyService(this.selectedService);
+  String userName;
+  MyService(this.selectedService, this.userName);
   String staffName = "";
   DateTime selectedDate = null;
   String time = "";
@@ -225,7 +226,7 @@ class MyService extends StatelessWidget {
                           userProvider.addNewBooking();
                         }
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => UserMainScreen(),
+                          builder: (context) => UserMainScreen(this.userName),
                         ));
                       },
                       color: Color(0xffff6ea1),
