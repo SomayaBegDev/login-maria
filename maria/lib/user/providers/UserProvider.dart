@@ -117,11 +117,11 @@ class UserProvider extends ChangeNotifier {
         userNmae: this.userName,
         staffName: this.staffName,
         service: this.service,
-        imageURL: this.imageURL,
+        imageUrl: this.imageURL,
         date: this.date,
         time: this.time,
         confirmation: this.confirmation);
-    String bookingId = await UserFB.userFB.addNewBookinf(userBooking);
+    String bookingId = await UserFB.userFB.addNewBooking(userBooking);
     if (bookingId != null) {
       getAllUser();
       return true;
@@ -153,8 +153,9 @@ class UserProvider extends ChangeNotifier {
 
   getBookingForAllUser() async {
     try {
-      List<UserBooking> allUsersBooking = await UserRep.userRep.getAllBooking();
-      this.bookingForAllUser = allUsersBooking;
+      List<UserBooking> usBook = await UserRep.userRep.getAllBooking();
+      this.bookingForAllUser = usBook;
+
       notifyListeners();
     } catch (error) {
       print(error);

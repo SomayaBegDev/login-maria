@@ -52,7 +52,7 @@ class UserFB {
   }
 
   //booking operation
-  Future<String> addNewBookinf(UserBooking booking) async {
+  Future<String> addNewBooking(UserBooking booking) async {
     try {
       DocumentReference docRefe =
           await firestoreUser.collection(bookingCollname).add(booking.toJson());

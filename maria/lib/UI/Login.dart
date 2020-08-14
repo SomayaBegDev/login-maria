@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/UI/ControlPanel.dart';
 import 'package:maria/cpanel/model/Admin.dart';
 import 'package:maria/cpanel/model/Staff.dart';
@@ -120,9 +121,29 @@ class Login extends StatelessWidget {
                         builder: (context) => ControlPanel(this.uName),
                       ));
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Login(),
-                      ));
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (_) => Container(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text(
+                                      "Please enter correct username & password",
+                                      style: showDiaStyle,
+                                    ),
+                                    FlatButton(
+                                      child: Text('Got it'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) => Login()));
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ));
                     }
                   },
                   color: Color(0xffff6ea1),

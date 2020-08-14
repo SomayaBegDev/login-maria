@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/Constant/Images/ImagesMaps.dart';
 import 'package:maria/user/model/UserBooking.dart';
 import 'package:maria/user/providers/UserProvider.dart';
@@ -10,12 +11,15 @@ class Booking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UserProvider userProv = Provider.of<UserProvider>(context, listen: false);
-    userProv.allBooking;
+    userProv.getBookingForAllUser();
     return Consumer<UserProvider>(builder: (context, value, child) {
-      List<UserBooking> allBooking = value.allBooking;
+      List<UserBooking> allBooking = value.bookingForAllUser;
       if (allBooking.isEmpty) {
         return Center(
-          child: Text('No booked services yet '),
+          child: Text(
+            'No booked services yet ',
+            style: showDiaStyle,
+          ),
         );
       } else {
         return Container(
@@ -25,7 +29,7 @@ class Booking extends StatelessWidget {
                 children: <Widget>[
                   Expanded(
                       child: CachedNetworkImage(
-                    imageUrl: allBooking[0].imageURL,
+                    imageUrl: allBooking[0].imageUrl,
                   )),
                   Expanded(
                     child: Column(
@@ -151,4 +155,3 @@ class Booking extends StatelessWidget {
     });
   }
 }
-/**/

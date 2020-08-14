@@ -116,6 +116,30 @@ class AddNewService extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10)),
               onPressed: () {
                 adminProvider.addNewService();
+                showModalBottomSheet(
+                    context: context,
+                    builder: (_) => Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "The service has been correctly added",
+                                style: showDiaStyle,
+                              ),
+                              FlatButton(
+                                child: Text('Got it'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ShowServices()));
+                                },
+                              ),
+                            ],
+                          ),
+                        ));
               },
               color: Color(0xffff6ea1),
               child: Text(

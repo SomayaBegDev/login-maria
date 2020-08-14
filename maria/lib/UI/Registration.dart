@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/model/User.dart';
+import 'package:maria/user/UI/UserMainScreen.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 
@@ -138,9 +140,32 @@ class Registration extends StatelessWidget {
                       this.email != null &&
                       email.contains(('@'))) {
                     userProvider.addNewUser();
-                  } else {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Services(this.username)));
+                        builder: (context) => UserMainScreen(this.username)));
+                  } else {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (_) => Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "All feiled are requred",
+                                    style: showDiaStyle,
+                                  ),
+                                  FlatButton(
+                                    child: Text('Got it'),
+                                    onPressed: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  Registration()));
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ));
                   }
                 },
                 color: Color(0xffff6ea1),

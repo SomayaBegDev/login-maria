@@ -9,8 +9,6 @@ import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'Booking.dart';
-import '../../Constant/Images/ImagesMaps.dart';
 
 class MyService extends StatelessWidget {
   int selectedService;
@@ -41,16 +39,16 @@ class MyService extends StatelessWidget {
 
   bool isAvailable(List<UserBooking> bookingFAU, String stName, DateTime aDate,
       String aTime) {
-    bool res = true;
+    bool availability = true;
+
     for (int i = 0; i < bookingFAU.length; i++) {
       if (bookingFAU[i].staffName == stName &&
           bookingFAU[i].date == aDate &&
           bookingFAU[i].time == aTime) {
-        res = false;
-        break;
+        availability = false;
       }
     }
-    return res;
+    return availability;
   }
 
   @override
@@ -214,7 +212,7 @@ class MyService extends StatelessWidget {
                       onPressed: () {
                         bool availability = isAvailable(bookingForAllUsers,
                             this.staffName, this.selectedDate, this.time);
-                        if (availability == true) {
+                        if (availability) {
                           userProvider.setStaffName(this.staffName);
 
                           userProvider.setDate(this.selectedDate);
@@ -224,10 +222,64 @@ class MyService extends StatelessWidget {
                           userProvider.setConfirmation(0);
 
                           userProvider.addNewBooking();
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (_) => Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "The booking process done successfully",
+                                          style: showDiaStyle,
+                                        ),
+                                        FlatButton(
+                                          child: Text('Got it'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UserMainScreen(this
+                                                                .userName)));
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                        } else {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (_) => Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "The booking failed! choose another time or date please!",
+                                          style: showDiaStyle,
+                                        ),
+                                        FlatButton(
+                                          child: Text('Got it'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UserMainScreen(this
+                                                                .userName)));
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ));
                         }
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => UserMainScreen(this.userName),
-                        ));
                       },
                       color: Color(0xffff6ea1),
                       child: Text(

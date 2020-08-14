@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maria/MainScreen.dart';
+import 'package:maria/MySplash.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         )
       ],
       child: MaterialApp(
-        home: MainScreen(),
+        home: MySplash(),
       ),
     );
   }
