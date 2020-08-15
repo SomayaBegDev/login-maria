@@ -58,11 +58,6 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/circle/
-    - assets/images/circleandrectangel/HairTreatment/
-    - assets/images/circleandrectangel/mackup/
-    - assets/images/circleandrectangel/otherservices/
-    - assets/images/circleandrectangel/skincare/
-    - assets/images/circleandrectangel/spaandmassage/
     - assets/images/icons/
     - assets/images/logoandother/
   #  - images/a_dot_ham.jpeg

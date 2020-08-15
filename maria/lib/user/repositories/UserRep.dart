@@ -55,14 +55,12 @@ class UserRep {
 
   Future<List<UserBooking>> getAllBooking() async {
     try {
-      List<DocumentSnapshot> documents = await UserFB.userFB.getAllBooking();
-
-      List<UserBooking> booking =
-          documents.map((e) => UserBooking.fromDocumetSnapshot(e)).toList();
-
-      return booking;
-    } catch (error) {
-      mySnackBar(error: error);
+      List<DocumentSnapshot> docs = await UserFB.userFB.getAllBooking();
+      List<UserBooking> allBooking =
+          docs.map((e) => UserBooking.fromDocumetSnapshot(e)).toList();
+      return allBooking;
+    } catch (e) {
+      print("${e}");
     }
   }
 }

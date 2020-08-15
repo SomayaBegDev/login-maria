@@ -63,13 +63,9 @@ class UserFB {
   }
 
   Future<List<DocumentSnapshot>> getAllBooking() async {
-    try {
-      QuerySnapshot querySnapshot =
-          await firestoreUser.collection(bookingCollname).getDocuments();
-      return querySnapshot.documents;
-    } catch (error) {
-      mySnackBar(error: error);
-    }
+    QuerySnapshot querySnapshot =
+        await firestoreUser.collection(bookingCollname).getDocuments();
+    return querySnapshot.documents;
   }
 
   deleteBooking(String documentId) async {

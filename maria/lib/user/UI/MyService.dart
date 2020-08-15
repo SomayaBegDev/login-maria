@@ -9,13 +9,15 @@ import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'Booking.dart';
+import '../../Constant/Images/ImagesMaps.dart';
 
 class MyService extends StatelessWidget {
   int selectedService;
   String userName;
   MyService(this.selectedService, this.userName);
   String staffName = "";
-  DateTime selectedDate = null;
+  dynamic selectedDate = null;
   String time = "";
   final _formKey = GlobalKey<FormState>();
   CalendarController _controller = CalendarController();
@@ -37,18 +39,18 @@ class MyService extends StatelessWidget {
     return allstaffList;
   }
 
-  bool isAvailable(List<UserBooking> bookingFAU, String stName, DateTime aDate,
+  bool isAvailable(List<UserBooking> bookingFAU, String stName, dynamic aDate,
       String aTime) {
-    bool availability = true;
-
+    bool res = true;
     for (int i = 0; i < bookingFAU.length; i++) {
-      if (bookingFAU[i].staffName == stName &&
+      if (bookingFAU[i].staffname == stName &&
           bookingFAU[i].date == aDate &&
           bookingFAU[i].time == aTime) {
-        availability = false;
+        res = false;
+        break;
       }
     }
-    return availability;
+    return res;
   }
 
   @override
@@ -58,7 +60,6 @@ class MyService extends StatelessWidget {
 
     userProvider.getAllStaff();
     userProvider.getAllServices();
-    userProvider.getBookingForAllUser();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffff6ea1),
@@ -71,7 +72,7 @@ class MyService extends StatelessWidget {
         builder: (context, value, child) {
           List<UserStaff> allStaffs = value.allStaff;
           List<UserService> allServices = value.allServices;
-          List<UserBooking> bookingForAllUsers = value.bookingForAllUser;
+          List<UserBooking> bookingForAllUsers = value.allUserBooking;
           if (allStaffs.isEmpty) {
             return Container();
           } else {
@@ -212,7 +213,7 @@ class MyService extends StatelessWidget {
                       onPressed: () {
                         bool availability = isAvailable(bookingForAllUsers,
                             this.staffName, this.selectedDate, this.time);
-                        if (availability) {
+                        if (availability == true) {
                           userProvider.setStaffName(this.staffName);
 
                           userProvider.setDate(this.selectedDate);
@@ -232,7 +233,7 @@ class MyService extends StatelessWidget {
                                           CrossAxisAlignment.center,
                                       children: <Widget>[
                                         Text(
-                                          "The booking process done successfully",
+                                          "The service has been booked correctly!",
                                           style: showDiaStyle,
                                         ),
                                         FlatButton(
@@ -252,33 +253,31 @@ class MyService extends StatelessWidget {
                                   ));
                         } else {
                           showModalBottomSheet(
-                              context: context,
-                              builder: (_) => Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "The booking failed! choose another time or date please!",
-                                          style: showDiaStyle,
-                                        ),
-                                        FlatButton(
-                                          child: Text('Got it'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            UserMainScreen(this
-                                                                .userName)));
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ));
+                            context: context,
+                            builder: (_) => Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "The booking failed try another date or time please !",
+                                    style: showDiaStyle,
+                                  ),
+                                  FlatButton(
+                                    child: Text('Got it'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) => MyService(
+                                                  this.selectedService,
+                                                  this.userName)));
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
                         }
                       },
                       color: Color(0xffff6ea1),

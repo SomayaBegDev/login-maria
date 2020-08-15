@@ -42,6 +42,7 @@ class Services extends StatelessWidget {
                       ),
                       Expanded(
                         child: CachedNetworkImage(
+                          // cacheManager: Ca,
                           imageUrl: allServices[index].imageURL,
                           placeholder: (context, url) =>
                               CircularProgressIndicator(),

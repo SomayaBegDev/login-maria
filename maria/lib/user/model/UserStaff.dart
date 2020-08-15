@@ -11,7 +11,7 @@ class UserStaff {
   }
   toJson() {
     return {
-      'staffname': this.staffname,
+      'username': this.staffname,
     };
   }
 }

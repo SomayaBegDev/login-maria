@@ -26,7 +26,8 @@ class UserMainScreen extends StatelessWidget {
               )
             ]),
           ),
-          body: TabBarView(children: [Services(this.username), Booking()]),
+          body: TabBarView(
+              children: [Services(this.username), Booking(this.username)]),
         ));
   }
 }

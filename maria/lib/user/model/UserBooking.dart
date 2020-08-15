@@ -2,39 +2,40 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserBooking {
   String documentId;
-  String userNmae;
-  String staffName;
+  String username;
+  String staffname;
   String service;
   String imageUrl;
-  DateTime date;
+  dynamic date;
   String time;
   int confirmation;
 
   UserBooking(
       {this.documentId,
-      this.userNmae,
-      this.staffName,
+      this.username,
+      this.staffname,
       this.service,
       this.imageUrl,
       this.date,
       this.time,
       this.confirmation});
+
   UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
     this.documentId = docSnapShot.documentID;
-    this.userNmae = docSnapShot.data['userNmae'];
+    this.username = docSnapShot.data['username'];
     this.service = docSnapShot.data['service'];
     this.imageUrl = docSnapShot.data['imageUrl'];
-    this.staffName = docSnapShot.data['staffName'];
+    this.staffname = docSnapShot.data['staffname'];
     this.date = docSnapShot.data['date'];
     this.time = docSnapShot.data['time'];
     this.confirmation = docSnapShot.data['confirmation'];
   }
   toJson() {
     return {
-      'userNmae': this.userNmae,
+      'username': this.username,
       'service': this.service,
       'imageUrl': this.imageUrl,
-      'staffName': this.staffName,
+      'staffname': this.staffname,
       'date': this.date,
       'time': this.time,
       'confirmation': this.confirmation

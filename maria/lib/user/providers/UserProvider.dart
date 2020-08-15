@@ -79,11 +79,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   //booking section
-  List<UserBooking> allBooking = [];
-  List<UserBooking> bookingForAllUser = [];
+
+  List<UserBooking> allUserBooking = [];
+
   String staffName;
   String service;
-  String imageURL;
+  String imageUrl;
   DateTime date;
   String time;
   int confirmation;
@@ -94,6 +95,10 @@ class UserProvider extends ChangeNotifier {
 
   setService(String aService) {
     this.service = aService;
+  }
+
+  setImageURL(String imURL) {
+    this.imageUrl = imURL;
   }
 
   setDate(DateTime date) {
@@ -108,22 +113,18 @@ class UserProvider extends ChangeNotifier {
     this.confirmation = conf;
   }
 
-  setImageURL(String imURL) {
-    this.imageURL = imURL;
-  }
-
   Future<bool> addNewBooking() async {
     UserBooking userBooking = UserBooking(
-        userNmae: this.userName,
-        staffName: this.staffName,
+        username: this.userName,
+        staffname: this.staffName,
         service: this.service,
-        imageUrl: this.imageURL,
+        imageUrl: this.imageUrl,
         date: this.date,
         time: this.time,
         confirmation: this.confirmation);
     String bookingId = await UserFB.userFB.addNewBooking(userBooking);
     if (bookingId != null) {
-      getAllUser();
+      getAllUserBooking();
       return true;
     } else {
       return false;
@@ -132,29 +133,14 @@ class UserProvider extends ChangeNotifier {
 
   deleteBooking(String documentId) async {
     await UserFB.userFB.deleteBooking(documentId);
-    getAllBooking();
-    getBookingForAllUser();
+
+    getAllUserBooking();
   }
 
-  getAllBooking() async {
-    try {
-      List<UserBooking> userBooking = await UserRep.userRep.getAllBooking();
-
-      for (int i = 0; i < userBooking.length; i++) {
-        if (userBooking[i].userNmae == this.userName) {
-          this.allBooking = userBooking;
-          notifyListeners();
-        }
-      }
-    } catch (error) {
-      mySnackBar(error: error);
-    }
-  }
-
-  getBookingForAllUser() async {
+  getAllUserBooking() async {
     try {
       List<UserBooking> usBook = await UserRep.userRep.getAllBooking();
-      this.bookingForAllUser = usBook;
+      this.allUserBooking = usBook;
 
       notifyListeners();
     } catch (error) {
