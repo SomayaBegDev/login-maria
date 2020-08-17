@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/cpanel/model/Admin.dart';
+import 'package:maria/cpanel/model/Booking.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/model/Staff.dart';
 import 'AdminDB.dart';
@@ -49,6 +50,19 @@ class AdminRep {
       return admin;
     } catch (error) {
       mySnackBar(error: error);
+    }
+  }
+
+  //booking section
+
+  Future<List<Booking>> getAllBooking() async {
+    try {
+      List<DocumentSnapshot> docs = await AdminDB.adminDB.getAllBooking();
+      List<Booking> allBooking =
+          docs.map((e) => Booking.fromDocumetSnapshot(e)).toList();
+      return allBooking;
+    } catch (e) {
+      print("${e}");
     }
   }
 }

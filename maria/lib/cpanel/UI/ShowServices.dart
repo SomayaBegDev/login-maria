@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
-import 'package:maria/cpanel/UI/AdminService.dart';
+import 'package:maria/cpanel/UI/widgets/AdminService.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 

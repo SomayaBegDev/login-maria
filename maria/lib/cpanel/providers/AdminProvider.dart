@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/cpanel/model/Admin.dart';
+import 'package:maria/cpanel/model/Booking.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/repositories/AdminDB.dart';
 import 'package:maria/cpanel/repositories/AdminRep.dart';
@@ -165,5 +166,18 @@ class AdminProvider extends ChangeNotifier {
   editAdmin(Admin admin) async {
     await AdminDB.adminDB.editAdmin(admin);
     getAllAdmin();
+  }
+
+  //booking section
+  List<Booking> allUserBooking = [];
+  getAllUserBooking() async {
+    try {
+      List<Booking> usBook = await AdminRep.adminRep.getAllBooking();
+      this.allUserBooking = usBook;
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
   }
 }

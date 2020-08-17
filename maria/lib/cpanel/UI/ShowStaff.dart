@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
-import 'package:maria/cpanel/UI/AdminStaff.dart';
+import 'package:maria/cpanel/UI/widgets/AdminStaff.dart';
 import 'package:maria/cpanel/model/Staff.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
-import 'package:maria/cpanel/UI/AdminTextField.dart';
+import 'package:maria/cpanel/UI/widgets/AdminTextField.dart';
 import 'package:provider/provider.dart';
 
 class ShowStaff extends StatelessWidget {

@@ -148,4 +148,12 @@ class AdminDB {
       mySnackBar(error: error);
     }
   }
+
+  //booking operation
+
+  Future<List<DocumentSnapshot>> getAllBooking() async {
+    QuerySnapshot querySnapshot =
+        await firestoreAdmin.collection(bookingCollname).getDocuments();
+    return querySnapshot.documents;
+  }
 }
