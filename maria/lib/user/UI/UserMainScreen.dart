@@ -1,5 +1,9 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
+import 'package:maria/MySplash.dart';
+import 'package:maria/UI/Login.dart';
 import 'package:maria/cpanel/model/User.dart';
 import 'package:maria/user/UI//Booking.dart';
 
@@ -19,15 +23,33 @@ class UserMainScreen extends StatelessWidget {
             title: Text('Welcome , ${this.username}'),
             bottom: TabBar(tabs: [
               Tab(
-                text: 'Services',
+                icon: Icon(Icons.style),
               ),
               Tab(
-                text: 'Booked Services',
-              )
+                icon: Icon(Icons.apps),
+              ),
             ]),
           ),
           body: TabBarView(
               children: [Services(this.username), Booking(this.username)]),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(
+              Icons.exit_to_app,
+              color: Colors.white,
+            ),
+            backgroundColor: appBarColor,
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MySplash()));
+            },
+          ),
         ));
   }
 }
+/* GestureDetector(
+            child: Text("Logout"),
+            onTap: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => Login()));
+            },
+          ),*/

@@ -9,10 +9,18 @@ import 'package:provider/provider.dart';
 class Booking extends StatelessWidget {
   String userName;
   Booking(this.userName);
-  List<UserBooking> allBooking = [];
+  List<UserBooking> thisUserBooking(List<UserBooking> allUsBoo) {
+    List<UserBooking> thisUsBo = [];
 
-  addToAllBooking(
-      List<UserBooking> allUsBoo, List<UserBooking> allBoo, String username) {}
+    for (int i = 0; i < allUsBoo.length; i++) {
+      if (allUsBoo[i].username == this.userName) {
+        thisUsBo.add(allUsBoo[i]);
+      }
+    }
+
+    return thisUsBo;
+  }
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProv = Provider.of<UserProvider>(context, listen: false);
@@ -21,8 +29,9 @@ class Booking extends StatelessWidget {
     return Consumer<UserProvider>(
       builder: (context, value, child) {
         List<UserBooking> allUserBooking = value.allUserBooking;
+        List<UserBooking> thisUseBoo = thisUserBooking(allUserBooking);
 
-        if (allUserBooking.isEmpty) {
+        if (thisUseBoo.isEmpty) {
           return Center(
             child: Text(
               'No booked services yet ',
@@ -31,144 +40,143 @@ class Booking extends StatelessWidget {
           );
         } else {
           return ListView.builder(
-              itemCount: allUserBooking.length,
+              itemCount: thisUseBoo.length,
               itemBuilder: (context, index) {
                 return Container(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: CachedNetworkImage(
-                            imageUrl: allUserBooking[index].imageUrl,
-                          )),
-                          Expanded(
-                            child: Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      allUserBooking[index].service,
-                                      style: TextStyle(
-                                        fontSize: 20,
+                  child: Dismissible(
+                    key: UniqueKey(),
+                    onDismissed: (direction) {
+                      Provider.of<UserProvider>(context, listen: false)
+                          .deleteBooking(thisUseBoo[index].documentId);
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                                child: CachedNetworkImage(
+                              imageUrl: thisUseBoo[index].imageUrl,
+                            )),
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        thisUseBoo[index].service,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Staff name",
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black45),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      allUserBooking[index].staffname,
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black45),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Date",
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black45),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        "${allUserBooking[index].date}",
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Staff name",
                                         style: TextStyle(
                                             fontSize: 15,
                                             color: Colors.black45),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    Text(
-                                      "Statues",
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black45),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      allUserBooking[index].confirmation == 0
-                                          ? "Unconfirmed"
-                                          : "Confirmed",
-                                      style: TextStyle(
-                                          fontSize: 15, color: Colors.black45),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      onPressed: () {
-                                        Provider.of<UserProvider>(context,
-                                                listen: false)
-                                            .setConfirmation(1);
-                                      },
-                                      color: Color(0xffff6ea1),
-                                      child: Text(
-                                        "Confirm",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 15),
+                                      SizedBox(
+                                        width: 5,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 2,
-                                    ),
-                                    RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      onPressed: () {
-                                        Provider.of<UserProvider>(context,
-                                                listen: false)
-                                            .deleteBooking(
-                                                allUserBooking[0].documentId);
-                                      },
-                                      color: Colors.black12,
-                                      child: Text(
-                                        "Remove",
+                                      Text(
+                                        thisUseBoo[index].staffname,
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 15),
+                                            fontSize: 15,
+                                            color: Colors.black45),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Date",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black45),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          "${thisUseBoo[index].date}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black45),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Statues",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black45),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        thisUseBoo[index].confirmation == 0
+                                            ? "Unconfirmed"
+                                            : "Confirmed",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black45),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        onPressed: () {
+                                          Provider.of<UserProvider>(context,
+                                                  listen: false)
+                                              .setConfirmation(1);
+                                        },
+                                        color: Color(0xffff6ea1),
+                                        child: Text(
+                                          "Confirm",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
                   ),
                 );
               });

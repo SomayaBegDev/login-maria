@@ -11,19 +11,19 @@ class AdminAd extends StatelessWidget {
   AdminAd({this.admin});
   @override
   Widget build(BuildContext context) {
-    AdminProvider adminProvider= Provider.of<AdminProvider>(context, listen: false);
+    AdminProvider adminProvider =
+        Provider.of<AdminProvider>(context, listen: false);
     // TODO: implement build
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        adminProvider
-            .deleteAdmin(admin.documentId);
+        adminProvider.deleteAdmin(admin.documentId);
       },
       child: Card(
         child: ListTile(
           title: Text(admin.adminname),
           subtitle: Text(admin.email),
-          trailing: IconButton(
+          /*  trailing: IconButton(
             icon: Icon(Icons.edit, color: appBarColor),
             onPressed: () {
               showModalBottomSheet(
@@ -77,7 +77,7 @@ class AdminAd extends StatelessWidget {
                     );
                   });
             },
-          ),
+          ),*/
         ),
       ),
     );

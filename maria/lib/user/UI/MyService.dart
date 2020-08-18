@@ -13,14 +13,25 @@ import 'Booking.dart';
 import '../../Constant/Images/ImagesMaps.dart';
 
 class MyService extends StatelessWidget {
+  DateTime date = DateTime.now();
   int selectedService;
   String userName;
   MyService(this.selectedService, this.userName);
   String staffName = "";
-  dynamic selectedDate = null;
+  DateTime selectedDate = null;
   String time = "";
   final _formKey = GlobalKey<FormState>();
   CalendarController _controller = CalendarController();
+  getDate(BuildContext context) async {
+    DateTime date = await showDatePicker(
+        context: context,
+        initialDate: this.date,
+        firstDate: DateTime(DateTime.now().year - 5),
+        lastDate: DateTime(DateTime.now().year + 5));
+    if (date != null) {
+      this.selectedDate = date;
+    }
+  }
 
   List<DropdownMenuItem<String>> showAlllStaff(List<UserStaff> allStaff) {
     List<DropdownMenuItem<String>> allstaffList = [];
@@ -154,23 +165,19 @@ class MyService extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    Flexible(
-                      child: TableCalendar(
-                        initialCalendarFormat: CalendarFormat.twoWeeks,
-                        availableCalendarFormats: {
-                          CalendarFormat.twoWeeks: "TwoWeeks"
-                        },
-                        calendarStyle: CalendarStyle(
-                            todayColor: Colors.black12,
-                            todayStyle: TextStyle(color: Colors.black),
-                            weekdayStyle: TextStyle(color: appBarColor),
-                            selectedColor: appBarColor,
-                            selectedStyle: TextStyle(color: Colors.black)),
-                        calendarController: _controller,
-                        onDaySelected: (date, event) {
-                          selectedDate = date;
-                        },
+                    ListTile(
+                      title: Text(
+                        "${date.year}-${date.month}-${date.day}",
+                        textAlign: TextAlign.center,
                       ),
+                      trailing: Icon(
+
+                        Icons.keyboard_arrow_down,
+                        color: appBarColor,
+                      ),
+                      onTap: () {
+                        getDate(context);
+                      },
                     ),
                     SizedBox(
                       height: 10,
@@ -296,3 +303,21 @@ class MyService extends StatelessWidget {
     );
   }
 }
+/*Flexible(
+                      child: TableCalendar(
+                        initialCalendarFormat: CalendarFormat.twoWeeks,
+                        availableCalendarFormats: {
+                          CalendarFormat.twoWeeks: "TwoWeeks"
+                        },
+                        calendarStyle: CalendarStyle(
+                            todayColor: Colors.black12,
+                            todayStyle: TextStyle(color: Colors.black),
+                            weekdayStyle: TextStyle(color: appBarColor),
+                            selectedColor: appBarColor,
+                            selectedStyle: TextStyle(color: Colors.black)),
+                        calendarController: _controller,
+                        onDaySelected: (date, event) {
+                          selectedDate = date;
+                        },
+                      ),
+                    ),*/

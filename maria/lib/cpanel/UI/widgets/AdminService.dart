@@ -51,7 +51,7 @@ class AdminService extends StatelessWidget {
         child: ListTile(
           title: Text(service.name),
           subtitle: Text("Fee : ${service.fee}"),
-          trailing: IconButton(
+          /* trailing: IconButton(
             icon: Icon(
               Icons.edit,
               color: appBarColor,
@@ -107,7 +107,7 @@ class AdminService extends StatelessWidget {
                     );
                   });
             },
-          ),
+          ),*/
         ),
       ),
     );

@@ -22,7 +22,7 @@ class AdminStaff extends StatelessWidget {
         child: ListTile(
           title: Text(staff.staffname),
           subtitle: Text(staff.email),
-          trailing: IconButton(
+          /* trailing: IconButton(
             icon: Icon(Icons.edit, color: appBarColor),
             onPressed: () {
               showModalBottomSheet(
@@ -79,7 +79,7 @@ class AdminStaff extends StatelessWidget {
                     );
                   });
             },
-          ),
+          ),*/
         ),
       ),
     );
