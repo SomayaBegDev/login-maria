@@ -7,7 +7,7 @@ class UserBooking {
   String service;
   String imageUrl;
   dynamic date;
-  String time;
+
   int confirmation;
 
   UserBooking(
@@ -17,7 +17,6 @@ class UserBooking {
       this.service,
       this.imageUrl,
       this.date,
-      this.time,
       this.confirmation});
 
   UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
@@ -27,7 +26,6 @@ class UserBooking {
     this.imageUrl = docSnapShot.data['imageUrl'];
     this.staffname = docSnapShot.data['staffname'];
     this.date = docSnapShot.data['date'];
-    this.time = docSnapShot.data['time'];
     this.confirmation = docSnapShot.data['confirmation'];
   }
   toJson() {
@@ -37,7 +35,6 @@ class UserBooking {
       'imageUrl': this.imageUrl,
       'staffname': this.staffname,
       'date': this.date,
-      'time': this.time,
       'confirmation': this.confirmation
     };
   }

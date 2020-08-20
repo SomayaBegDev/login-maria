@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
@@ -9,6 +10,8 @@ import 'package:provider/provider.dart';
 class Booking extends StatelessWidget {
   String userName;
   Booking(this.userName);
+  Timestamp bookedDate = null;
+  Timestamp bookedTime = null;
   List<UserBooking> thisUserBooking(List<UserBooking> allUsBoo) {
     List<UserBooking> thisUsBo = [];
 
@@ -42,6 +45,10 @@ class Booking extends StatelessWidget {
           return ListView.builder(
               itemCount: thisUseBoo.length,
               itemBuilder: (context, index) {
+                this.bookedDate = thisUseBoo[index].date;
+
+                this.bookedTime = thisUseBoo[index].date;
+
                 return Container(
                   child: Dismissible(
                     key: UniqueKey(),
@@ -111,7 +118,31 @@ class Booking extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "${thisUseBoo[index].date}",
+                                          "${this.bookedDate.toDate().toString().substring(0, 10)}",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Colors.black45),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      Text(
+                                        "Time",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            color: Colors.black45),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          "${this.bookedTime.toDate().toString().substring(10, 16)}",
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.black45),

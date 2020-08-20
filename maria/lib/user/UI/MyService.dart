@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
@@ -18,11 +19,10 @@ class MyService extends StatelessWidget {
   String userName;
   MyService(this.selectedService, this.userName);
   String staffName = "";
-  DateTime selectedDate = null;
-  String time = "";
+  var selectedDate = null;
   final _formKey = GlobalKey<FormState>();
   CalendarController _controller = CalendarController();
-  getDate(BuildContext context) async {
+  /* getDate(BuildContext context) async {
     DateTime date = await showDatePicker(
         context: context,
         initialDate: this.date,
@@ -31,7 +31,7 @@ class MyService extends StatelessWidget {
     if (date != null) {
       this.selectedDate = date;
     }
-  }
+  }*/
 
   List<DropdownMenuItem<String>> showAlllStaff(List<UserStaff> allStaff) {
     List<DropdownMenuItem<String>> allstaffList = [];
@@ -50,13 +50,16 @@ class MyService extends StatelessWidget {
     return allstaffList;
   }
 
-  bool isAvailable(List<UserBooking> bookingFAU, String stName, dynamic aDate,
-      String aTime) {
+  bool isAvailable(
+      List<UserBooking> bookingFAU, String stName, Timestamp aDate) {
+    String newSelectedDate = aDate.toDate().toString().substring(0, 10);
+    String newSelctedTime = aDate.toDate().toString().substring(10, 16);
     bool res = true;
     for (int i = 0; i < bookingFAU.length; i++) {
-      if (bookingFAU[i].staffname == stName &&
-          bookingFAU[i].date == aDate &&
-          bookingFAU[i].time == aTime) {
+      Timestamp bookedDate = bookingFAU[i].date;
+      String bookedDateStr = bookedDate.toDate().toString().substring(0, 10);
+      String bookedTimeStr = bookedDate.toDate().toString().substring(10, 16);
+      if (bookingFAU[i].staffname == stName && bookingFAU[i].date == aDate) {
         res = false;
         break;
       }
@@ -165,20 +168,37 @@ class MyService extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    ListTile(
+                    Flexible(
+                      child: TableCalendar(
+                        initialCalendarFormat: CalendarFormat.twoWeeks,
+                        availableCalendarFormats: {
+                          CalendarFormat.twoWeeks: "TwoWeeks"
+                        },
+                        calendarStyle: CalendarStyle(
+                            todayColor: Colors.black12,
+                            todayStyle: TextStyle(color: Colors.black),
+                            weekdayStyle: TextStyle(color: appBarColor),
+                            selectedColor: appBarColor,
+                            selectedStyle: TextStyle(color: Colors.black)),
+                        calendarController: _controller,
+                        onDaySelected: (date, event) {
+                          selectedDate = date;
+                        },
+                      ),
+                    ),
+                    /*ListTile(
                       title: Text(
                         "${date.year}-${date.month}-${date.day}",
                         textAlign: TextAlign.center,
                       ),
                       trailing: Icon(
-
                         Icons.keyboard_arrow_down,
                         color: appBarColor,
                       ),
                       onTap: () {
                         getDate(context);
                       },
-                    ),
+                    ),*/
                     SizedBox(
                       height: 10,
                     ),
@@ -191,24 +211,6 @@ class MyService extends StatelessWidget {
                             fontSize: 15,
                           ),
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        DropdownButton(
-                          items: [
-                            DropdownMenuItem(
-                              child: Text("10 AM"),
-                              value: "10 AM",
-                            ),
-                            DropdownMenuItem(
-                              child: Text("11 AM"),
-                              value: "11 AM",
-                            ),
-                          ],
-                          onChanged: (value) {
-                            time = value;
-                          },
-                        ),
                       ],
                     ),
                     SizedBox(
@@ -219,13 +221,11 @@ class MyService extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10)),
                       onPressed: () {
                         bool availability = isAvailable(bookingForAllUsers,
-                            this.staffName, this.selectedDate, this.time);
+                            this.staffName, this.selectedDate);
                         if (availability == true) {
                           userProvider.setStaffName(this.staffName);
 
                           userProvider.setDate(this.selectedDate);
-
-                          userProvider.setTime(this.time);
 
                           userProvider.setConfirmation(0);
 
