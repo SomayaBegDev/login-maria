@@ -199,20 +199,7 @@ class MyService extends StatelessWidget {
                         getDate(context);
                       },
                     ),*/
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Time",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
-                        ),
-                      ],
-                    ),
+
                     SizedBox(
                       height: 10,
                     ),
@@ -220,45 +207,43 @@ class MyService extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       onPressed: () {
-                        bool availability = isAvailable(bookingForAllUsers,
-                            this.staffName, this.selectedDate);
-                        if (availability == true) {
-                          userProvider.setStaffName(this.staffName);
+                        //bool availability = isAvailable(bookingForAllUsers,
+                        //this.staffName, this.selectedDate);
 
-                          userProvider.setDate(this.selectedDate);
+                        userProvider.setStaffName(this.staffName);
 
-                          userProvider.setConfirmation(0);
+                        userProvider.setDate(this.selectedDate);
 
-                          userProvider.addNewBooking();
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (_) => Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Text(
-                                          "The service has been booked correctly!",
-                                          style: showDiaStyle,
-                                        ),
-                                        FlatButton(
-                                          child: Text('Got it'),
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                            Navigator.of(context)
-                                                .pushReplacement(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            UserMainScreen(this
-                                                                .userName)));
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ));
-                        } else {
+                        userProvider.setConfirmation(0);
+
+                        userProvider.addNewBooking();
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (_) => Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        "The service has been booked correctly!",
+                                        style: showDiaStyle,
+                                      ),
+                                      FlatButton(
+                                        child: Text('Got it'),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                          Navigator.of(context).pushReplacement(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UserMainScreen(
+                                                          this.userName)));
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ));
+                        /* else {
                           showModalBottomSheet(
                             context: context,
                             builder: (_) => Container(
@@ -285,7 +270,7 @@ class MyService extends StatelessWidget {
                               ),
                             ),
                           );
-                        }
+                        }*/
                       },
                       color: Color(0xffff6ea1),
                       child: Text(
