@@ -8,7 +8,6 @@ import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class MyService extends StatelessWidget {
   DateTime date = DateTime.now();
@@ -97,6 +96,20 @@ class MyService extends StatelessWidget {
     return allstaffList;
   }
 
+  bool isAvailable(List<UserBooking> allUsBoo) {
+    //String aDate, String aTime, String aStaff
+    bool availability = true;
+    for (int i = 0; i < allUsBoo.length; i++) {
+      if (allUsBoo[i].date == this.strSelDate &&
+          allUsBoo[i].time == this.strSelTime &&
+          allUsBoo[i].staffname == this.staffName) {
+        availability = false;
+        break;
+      }
+    }
+    return availability;
+  }
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider =
@@ -104,6 +117,7 @@ class MyService extends StatelessWidget {
 
     userProvider.getAllStaff();
     userProvider.getAllServices();
+    userProvider.getAllUserBooking();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffff6ea1),
@@ -116,7 +130,7 @@ class MyService extends StatelessWidget {
         builder: (context, value, child) {
           List<UserStaff> allStaffs = value.allStaff;
           List<UserService> allServices = value.allServices;
-          List<UserBooking> bookingForAllUsers = value.allUserBooking;
+          List<UserBooking> allUserBooking = value.allUserBooking;
           if (allStaffs.isEmpty) {
             return Container();
           } else {
@@ -233,44 +247,45 @@ class MyService extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       onPressed: () {
-                        //bool availability = isAvailable(bookingForAllUsers,
-                        //this.staffName, this.selectedDate);
+                        bool checkAvailable = isAvailable(allUserBooking);
+                        if (checkAvailable) {
+                          userProvider.setStaffName(this.staffName);
 
-                        userProvider.setStaffName(this.staffName);
+                          userProvider.setDate(this.strSelDate);
+                          userProvider.setTime(this.strSelTime);
 
-                        userProvider.setDate(this.strSelDate);
-                        userProvider.setTime(this.strSelTime);
+                          userProvider.setConfirmation(0);
 
-                        userProvider.setConfirmation(0);
-
-                        userProvider.addNewBooking();
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (_) => Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: <Widget>[
-                                      Text(
-                                        "The service has been booked correctly!",
-                                        style: showDiaStyle,
-                                      ),
-                                      FlatButton(
-                                        child: Text('Got it'),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                          Navigator.of(context).pushReplacement(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UserMainScreen(
-                                                          this.userName)));
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ));
-                        /* else {
+                          userProvider.addNewBooking();
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (_) => Container(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                          "The service has been booked correctly!",
+                                          style: showDiaStyle,
+                                        ),
+                                        FlatButton(
+                                          child: Text('Got it'),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            Navigator.of(context)
+                                                .pushReplacement(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UserMainScreen(this
+                                                                .userName)));
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ));
+                        } else {
                           showModalBottomSheet(
                             context: context,
                             builder: (_) => Container(
@@ -297,7 +312,7 @@ class MyService extends StatelessWidget {
                               ),
                             ),
                           );
-                        }*/
+                        }
                       },
                       color: Color(0xffff6ea1),
                       child: Text(
@@ -315,13 +330,3 @@ class MyService extends StatelessWidget {
     );
   }
 }
-
-/*
-                        calendarStyle: CalendarStyle(
-                            todayColor: Colors.black12,
-                            todayStyle: TextStyle(color: Colors.black),
-                            weekdayStyle: TextStyle(color: appBarColor),
-                            selectedColor: appBarColor,
-                            selectedStyle: TextStyle(color: Colors.black)),
-                        calendarController: _controller,
-                     */
