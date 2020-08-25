@@ -19,7 +19,7 @@ class UserRep {
 
       return users;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -33,7 +33,7 @@ class UserRep {
 
       return services;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -47,7 +47,7 @@ class UserRep {
 
       return staff;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 

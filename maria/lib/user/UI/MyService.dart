@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
-import 'package:maria/user/UI/Services.dart';
 import 'package:maria/user/UI/UserMainScreen.dart';
 import 'package:maria/user/model/UserBooking.dart';
 import 'package:maria/user/model/UserService.dart';
@@ -10,28 +9,76 @@ import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/providers/UserProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'Booking.dart';
-import '../../Constant/Images/ImagesMaps.dart';
 
 class MyService extends StatelessWidget {
   DateTime date = DateTime.now();
+  TimeOfDay time = TimeOfDay.now();
+  DateTime selectedDate = null;
+  TimeOfDay selectedTime = null;
+  String strSelTime = "";
+  String strSelDate = "";
   int selectedService;
   String userName;
   MyService(this.selectedService, this.userName);
   String staffName = "";
-  var selectedDate = null;
+
+  MaterialColor bootomTextColor = MaterialColor(0xffff6ea1, <int, Color>{
+    50: Color(0xffff6ea1),
+    100: Color(0xffff6ea1),
+    200: Color(0xffff6ea1),
+    300: Color(0xffff6ea1),
+    400: Color(0xffff6ea1),
+    500: Color(0xffff6ea1),
+    600: Color(0xffff6ea1),
+    700: Color(0xffff6ea1),
+    800: Color(0xffff6ea1),
+    900: Color(0xffff6ea1),
+  });
+
   final _formKey = GlobalKey<FormState>();
-  CalendarController _controller = CalendarController();
-  /* getDate(BuildContext context) async {
+
+  getDate(BuildContext context) async {
     DateTime date = await showDatePicker(
         context: context,
         initialDate: this.date,
         firstDate: DateTime(DateTime.now().year - 5),
-        lastDate: DateTime(DateTime.now().year + 5));
+        lastDate: DateTime(DateTime.now().year + 5),
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(
+              primaryColor: appBarColor,
+              accentColor: appBarColor,
+              primarySwatch: bootomTextColor,
+            ),
+            child: child,
+          );
+        });
+
     if (date != null) {
       this.selectedDate = date;
+      this.strSelDate = this.selectedDate.toString().substring(0, 10);
     }
-  }*/
+  }
+
+  getTime(BuildContext context) async {
+    TimeOfDay time = await showTimePicker(
+        context: context,
+        initialTime: this.time,
+        builder: (BuildContext context, Widget child) {
+          return Theme(
+            data: ThemeData(
+              primaryColor: appBarColor,
+              accentColor: appBarColor,
+              primarySwatch: bootomTextColor,
+            ),
+            child: child,
+          );
+        });
+    if (time != null) {
+      this.selectedTime = time;
+      this.strSelTime = this.selectedTime.toString().substring(10, 15);
+    }
+  }
 
   List<DropdownMenuItem<String>> showAlllStaff(List<UserStaff> allStaff) {
     List<DropdownMenuItem<String>> allstaffList = [];
@@ -48,23 +95,6 @@ class MyService extends StatelessWidget {
       ));
     }
     return allstaffList;
-  }
-
-  bool isAvailable(
-      List<UserBooking> bookingFAU, String stName, Timestamp aDate) {
-    String newSelectedDate = aDate.toDate().toString().substring(0, 10);
-    String newSelctedTime = aDate.toDate().toString().substring(10, 16);
-    bool res = true;
-    for (int i = 0; i < bookingFAU.length; i++) {
-      Timestamp bookedDate = bookingFAU[i].date;
-      String bookedDateStr = bookedDate.toDate().toString().substring(0, 10);
-      String bookedTimeStr = bookedDate.toDate().toString().substring(10, 16);
-      if (bookingFAU[i].staffname == stName && bookingFAU[i].date == aDate) {
-        res = false;
-        break;
-      }
-    }
-    return res;
   }
 
   @override
@@ -142,9 +172,6 @@ class MyService extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 10,
-                    ),
 
                     /*  DropdownButton(
                   value: 1,
@@ -161,45 +188,44 @@ class MyService extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),*/
-
-                    Text(
-                      "Date",
-                      style: TextStyle(
-                        fontSize: 15,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Date",
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 150),
+                          child: TextField(
+                            onTap: () {
+                              getDate(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    Flexible(
-                      child: TableCalendar(
-                        initialCalendarFormat: CalendarFormat.twoWeeks,
-                        availableCalendarFormats: {
-                          CalendarFormat.twoWeeks: "TwoWeeks"
-                        },
-                        calendarStyle: CalendarStyle(
-                            todayColor: Colors.black12,
-                            todayStyle: TextStyle(color: Colors.black),
-                            weekdayStyle: TextStyle(color: appBarColor),
-                            selectedColor: appBarColor,
-                            selectedStyle: TextStyle(color: Colors.black)),
-                        calendarController: _controller,
-                        onDaySelected: (date, event) {
-                          selectedDate = date;
-                        },
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Time",
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Container(
+                          constraints: BoxConstraints(maxWidth: 150),
+                          child: TextField(
+                            onTap: () {
+                              getTime(context);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    /*ListTile(
-                      title: Text(
-                        "${date.year}-${date.month}-${date.day}",
-                        textAlign: TextAlign.center,
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: appBarColor,
-                      ),
-                      onTap: () {
-                        getDate(context);
-                      },
-                    ),*/
-
                     SizedBox(
                       height: 10,
                     ),
@@ -212,7 +238,8 @@ class MyService extends StatelessWidget {
 
                         userProvider.setStaffName(this.staffName);
 
-                        userProvider.setDate(this.selectedDate);
+                        userProvider.setDate(this.strSelDate);
+                        userProvider.setTime(this.strSelTime);
 
                         userProvider.setConfirmation(0);
 
@@ -288,12 +315,8 @@ class MyService extends StatelessWidget {
     );
   }
 }
-/*Flexible(
-                      child: TableCalendar(
-                        initialCalendarFormat: CalendarFormat.twoWeeks,
-                        availableCalendarFormats: {
-                          CalendarFormat.twoWeeks: "TwoWeeks"
-                        },
+
+/*
                         calendarStyle: CalendarStyle(
                             todayColor: Colors.black12,
                             todayStyle: TextStyle(color: Colors.black),
@@ -301,8 +324,4 @@ class MyService extends StatelessWidget {
                             selectedColor: appBarColor,
                             selectedStyle: TextStyle(color: Colors.black)),
                         calendarController: _controller,
-                        onDaySelected: (date, event) {
-                          selectedDate = date;
-                        },
-                      ),
-                    ),*/
+                     */

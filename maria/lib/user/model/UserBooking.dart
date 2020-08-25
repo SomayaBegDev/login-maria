@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class UserBooking {
   String documentId;
@@ -6,7 +7,8 @@ class UserBooking {
   String staffname;
   String service;
   String imageUrl;
-  dynamic date;
+  var date;
+  var time;
 
   int confirmation;
 
@@ -17,6 +19,7 @@ class UserBooking {
       this.service,
       this.imageUrl,
       this.date,
+      this.time,
       this.confirmation});
 
   UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
@@ -26,6 +29,7 @@ class UserBooking {
     this.imageUrl = docSnapShot.data['imageUrl'];
     this.staffname = docSnapShot.data['staffname'];
     this.date = docSnapShot.data['date'];
+    this.time = docSnapShot.data['time'];
     this.confirmation = docSnapShot.data['confirmation'];
   }
   toJson() {
@@ -35,6 +39,7 @@ class UserBooking {
       'imageUrl': this.imageUrl,
       'staffname': this.staffname,
       'date': this.date,
+      'time': this.time,
       'confirmation': this.confirmation
     };
   }

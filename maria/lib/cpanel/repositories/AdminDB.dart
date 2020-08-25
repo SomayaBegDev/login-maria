@@ -36,7 +36,7 @@ class AdminDB {
           .add(service.toJson());
       return docRefe.documentID;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -57,7 +57,7 @@ class AdminDB {
           .document(service.documentId)
           .setData(service.toJson());
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -65,7 +65,7 @@ class AdminDB {
     try {
       firestoreAdmin.collection(serviceCollname).document(documentId).delete();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -76,7 +76,7 @@ class AdminDB {
           await firestoreAdmin.collection(staffCollname).add(staff.toJson());
       return docRefe.documentID;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -86,7 +86,7 @@ class AdminDB {
           await firestoreAdmin.collection(staffCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -97,7 +97,7 @@ class AdminDB {
           .document(staff.documentId)
           .setData(staff.toJson());
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -105,7 +105,7 @@ class AdminDB {
     try {
       firestoreAdmin.collection(staffCollname).document(documentId).delete();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -116,7 +116,7 @@ class AdminDB {
           await firestoreAdmin.collection(adminCollname).add(admin.toJson());
       return docRefe.documentID;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -126,7 +126,7 @@ class AdminDB {
           await firestoreAdmin.collection(adminCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -137,7 +137,7 @@ class AdminDB {
           .document(admin.documentId)
           .setData(admin.toJson());
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -145,7 +145,7 @@ class AdminDB {
     try {
       firestoreAdmin.collection(adminCollname).document(documentId).delete();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 

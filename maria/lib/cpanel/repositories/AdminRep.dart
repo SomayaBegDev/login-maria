@@ -34,8 +34,7 @@ class AdminRep {
           documents.map((e) => Staff.fromDocumetSnapshot(e)).toList();
 
       return staff;
-    } catch (error) {
-      mySnackBar(error: error);
+    } catch (error) { print(error);
     }
   }
 
@@ -49,7 +48,7 @@ class AdminRep {
 
       return admin;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 

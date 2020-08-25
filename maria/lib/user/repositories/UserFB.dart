@@ -17,7 +17,7 @@ class UserFB {
           await firestoreUser.collection(userCollname).add(user.toJson());
       return docRefe.documentID;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -27,7 +27,7 @@ class UserFB {
           await firestoreUser.collection(serviceCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -37,7 +37,7 @@ class UserFB {
           await firestoreUser.collection(staffCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -47,7 +47,7 @@ class UserFB {
           await firestoreUser.collection(userCollname).getDocuments();
       return querySnapshot.documents;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -58,7 +58,7 @@ class UserFB {
           await firestoreUser.collection(bookingCollname).add(booking.toJson());
       return docRefe.documentID;
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -72,7 +72,7 @@ class UserFB {
     try {
       firestoreUser.collection(bookingCollname).document(documentId).delete();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 }

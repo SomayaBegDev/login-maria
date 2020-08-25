@@ -10,8 +10,8 @@ import 'package:provider/provider.dart';
 class Booking extends StatelessWidget {
   String userName;
   Booking(this.userName);
-  Timestamp bookedDate = null;
-  Timestamp bookedTime = null;
+  DateTime bookedDate = null;
+  TimeOfDay bookedTime = null;
   List<UserBooking> thisUserBooking(List<UserBooking> allUsBoo) {
     List<UserBooking> thisUsBo = [];
 
@@ -47,7 +47,7 @@ class Booking extends StatelessWidget {
               itemBuilder: (context, index) {
                 this.bookedDate = thisUseBoo[index].date;
 
-                this.bookedTime = thisUseBoo[index].date;
+                this.bookedTime = thisUseBoo[index].time;
 
                 return Container(
                   child: Dismissible(
@@ -118,7 +118,7 @@ class Booking extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "${this.bookedDate.toDate().toString().substring(0, 10)}",
+                                          "${this.bookedDate.toString().substring(0, 10)}",
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.black45),
@@ -142,7 +142,8 @@ class Booking extends StatelessWidget {
                                       ),
                                       Expanded(
                                         child: Text(
-                                          "${this.bookedTime.toDate().toString().substring(10, 16)}",
+                                          "${this.bookedTime}",
+                                          //.toString().substring(10, 16)
                                           style: TextStyle(
                                               fontSize: 15,
                                               color: Colors.black45),

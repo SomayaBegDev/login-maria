@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/cpanel/model/Admin.dart';
 import 'package:maria/cpanel/model/Booking.dart';
 import 'package:maria/cpanel/model/Service.dart';
@@ -102,7 +101,7 @@ class AdminProvider extends ChangeNotifier {
       this.allStaff = staff;
       notifyListeners();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -154,7 +153,7 @@ class AdminProvider extends ChangeNotifier {
       this.allAdmin = admin;
       notifyListeners();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 

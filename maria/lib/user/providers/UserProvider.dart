@@ -49,7 +49,7 @@ class UserProvider extends ChangeNotifier {
       this.allUsers = users;
       notifyListeners();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -74,7 +74,7 @@ class UserProvider extends ChangeNotifier {
       this.allStaff = staff;
       notifyListeners();
     } catch (error) {
-      mySnackBar(error: error);
+      print(error);
     }
   }
 
@@ -85,7 +85,9 @@ class UserProvider extends ChangeNotifier {
   String staffName;
   String service;
   String imageUrl;
-  DateTime date;
+  var date;
+  var time;
+
   int confirmation;
 
   setStaffName(String stName) {
@@ -100,8 +102,12 @@ class UserProvider extends ChangeNotifier {
     this.imageUrl = imURL;
   }
 
-  setDate(DateTime date) {
+  setDate(var date) {
     this.date = date;
+  }
+
+  setTime(var time) {
+    this.time = time;
   }
 
   setConfirmation(int conf) {
@@ -115,6 +121,7 @@ class UserProvider extends ChangeNotifier {
         service: this.service,
         imageUrl: this.imageUrl,
         date: this.date,
+        time: this.time,
         confirmation: this.confirmation);
     String bookingId = await UserFB.userFB.addNewBooking(userBooking);
     if (bookingId != null) {
