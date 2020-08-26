@@ -75,4 +75,15 @@ class UserFB {
       print(error);
     }
   }
+
+  updateBooking(String documentId, Map booking) async {
+    try {
+      await firestoreUser
+          .collection(bookingCollname)
+          .document(documentId)
+          .updateData(booking);
+    } catch (e) {
+      print(e);
+    }
+  }
 }

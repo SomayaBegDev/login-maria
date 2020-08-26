@@ -138,6 +138,14 @@ class UserProvider extends ChangeNotifier {
     getAllUserBooking();
   }
 
+  updateBooking(UserBooking userBooking, String documentId) async {
+    try {
+      await UserFB.userFB.updateBooking(documentId, userBooking.toJson());
+    } catch (e) {
+      print(e);
+    }
+  }
+
   getAllUserBooking() async {
     try {
       List<UserBooking> usBook = await UserRep.userRep.getAllBooking();

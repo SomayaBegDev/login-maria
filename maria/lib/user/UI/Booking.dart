@@ -179,9 +179,11 @@ class Booking extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         onPressed: () {
+                                          thisUseBoo[index].confirmation = 1;
                                           Provider.of<UserProvider>(context,
                                                   listen: false)
-                                              .setConfirmation(1);
+                                              .updateBooking(thisUseBoo[index],
+                                                  thisUseBoo[index].documentId);
                                         },
                                         color: Color(0xffff6ea1),
                                         child: Text(
