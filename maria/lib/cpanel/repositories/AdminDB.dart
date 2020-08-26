@@ -50,12 +50,12 @@ class AdminDB {
     }
   }
 
-  editService(Service service) async {
+  editService(String documentId, Map service) async {
     try {
-      firestoreAdmin
+      await firestoreAdmin
           .collection(serviceCollname)
-          .document(service.documentId)
-          .setData(service.toJson());
+          .document(documentId)
+          .updateData(service);
     } catch (error) {
       print(error);
     }
@@ -90,12 +90,12 @@ class AdminDB {
     }
   }
 
-  editStaff(Staff staff) async {
+  editStaff(String documentId, Map staff) async {
     try {
-      firestoreAdmin
+      await firestoreAdmin
           .collection(staffCollname)
-          .document(staff.documentId)
-          .setData(staff.toJson());
+          .document(documentId)
+          .updateData(staff);
     } catch (error) {
       print(error);
     }

@@ -58,9 +58,12 @@ class AdminProvider extends ChangeNotifier {
     getAllServices();
   }
 
-  editService(Service service) async {
-    await AdminDB.adminDB.editService(service);
-    getAllServices();
+  editService(Service service, String documentId) async {
+    try {
+      await AdminDB.adminDB.editService(documentId, service.toJson());
+    } catch (e) {
+      print(e);
+    }
   }
 
   //Staff Section
@@ -110,9 +113,12 @@ class AdminProvider extends ChangeNotifier {
     getAllStaff();
   }
 
-  editStaff(Staff staff) async {
-    await AdminDB.adminDB.editStaff(staff);
-    getAllStaff();
+  editStaff(Staff staff, String documentId) async {
+    try {
+      await AdminDB.adminDB.editStaff(documentId, staff.toJson());
+    } catch (e) {
+      print(e);
+    }
   }
 
   //Admin section

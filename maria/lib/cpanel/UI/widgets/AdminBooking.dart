@@ -17,18 +17,14 @@ class AdminBooking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Dismissible(
-      key: UniqueKey(),
-      child: Card(
-        child: ListTile(
-          title: Text(booking.service),
-          subtitle: Text("${booking.staffname}\n "
-              "Staff Name : ${booking.staffname}\n"
-              "User Name : ${booking.username}\n"
-              "Date : ${booking.date}\n"
-              "Time : ${booking.time}\n"
-              "Confirmation : ${booking.confirmation}\n"),
-        ),
+    return Card(
+      child: ListTile(
+        title: Text(booking.service),
+        subtitle: Text("Staff Name : ${booking.staffname}\n"
+            "User Name : ${booking.username}\n"
+            "Date : ${booking.date}\n"
+            "Time : ${booking.time}\n"
+            "Statues : ${booking.confirmation == 0 ? "Unconfirmed" : "Confirmed"}\n"),
       ),
     );
   }
