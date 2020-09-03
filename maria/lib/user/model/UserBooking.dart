@@ -9,8 +9,9 @@ class UserBooking {
   String imageUrl;
   var date;
   var time;
-
   int confirmation;
+  String comment;
+  double evaluation;
 
   UserBooking(
       {this.documentId,
@@ -20,7 +21,9 @@ class UserBooking {
       this.imageUrl,
       this.date,
       this.time,
-      this.confirmation});
+      this.confirmation,
+      this.comment,
+      this.evaluation});
 
   UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
     this.documentId = docSnapShot.documentID;
@@ -31,6 +34,8 @@ class UserBooking {
     this.date = docSnapShot.data['date'];
     this.time = docSnapShot.data['time'];
     this.confirmation = docSnapShot.data['confirmation'];
+    this.comment = docSnapShot.data['comment'];
+    this.evaluation = docSnapShot.data['evaluation'];
   }
   toJson() {
     return {
@@ -40,7 +45,9 @@ class UserBooking {
       'staffname': this.staffname,
       'date': this.date,
       'time': this.time,
-      'confirmation': this.confirmation
+      'confirmation': this.confirmation,
+      'comment': this.comment,
+      'evaluation': this.evaluation
     };
   }
 }

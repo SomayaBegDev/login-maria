@@ -265,6 +265,8 @@ class MyService extends StatelessWidget {
                             isAvailable(allUserBooking, userProvider);
                         if (checkAvailable) {
                           userProvider.setConfirmation(0);
+                          userProvider.setComment("");
+                          userProvider.setEvaluation(0.0);
 
                           userProvider.addNewBooking();
                           showModalBottomSheet(

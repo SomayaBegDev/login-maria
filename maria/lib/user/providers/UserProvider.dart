@@ -85,8 +85,10 @@ class UserProvider extends ChangeNotifier {
   String staffName;
   String service;
   String imageUrl;
-  var date;
-  var time;
+  var date = "";
+  var time = "";
+  String comment = "";
+  double evaluation = 0.0;
 
   int confirmation;
 
@@ -114,6 +116,14 @@ class UserProvider extends ChangeNotifier {
     this.confirmation = conf;
   }
 
+  setComment(String comment) {
+    this.comment = comment;
+  }
+
+  setEvaluation(double evaluation) {
+    this.evaluation = evaluation;
+  }
+
   Future<bool> addNewBooking() async {
     UserBooking userBooking = UserBooking(
         username: this.userName,
@@ -122,7 +132,9 @@ class UserProvider extends ChangeNotifier {
         imageUrl: this.imageUrl,
         date: this.date,
         time: this.time,
-        confirmation: this.confirmation);
+        confirmation: this.confirmation,
+        comment: this.comment,
+        evaluation: this.evaluation);
     String bookingId = await UserFB.userFB.addNewBooking(userBooking);
     if (bookingId != null) {
       getAllUserBooking();
