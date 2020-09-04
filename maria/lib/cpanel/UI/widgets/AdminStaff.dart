@@ -29,30 +29,25 @@ class AdminStaff extends StatelessWidget {
             icon: Icon(Icons.edit, color: appBarColor),
             onPressed: () {
               showModalBottomSheet(
-                  backgroundColor: appBarColor,
                   context: context,
                   builder: (BuildContext context) {
-                    return Padding(
-                      padding: MediaQuery.of(context).viewInsets,
-                      child: Container(
-                        child: CupertinoActionSheet(
-                          actions: <Widget>[
-                            CupertinoActionSheetAction(
-                              onPressed: () {},
-                              child: Card(
-                                elevation: 0.0,
-                                child: TextField(
-                                  onChanged: (val) {
-                                    staff.email = val;
-                                  },
-                                  decoration: InputDecoration(
-                                    labelText: "${staff.staffname} New Email",
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                          cancelButton: CupertinoActionSheetAction(
+                    return Column(
+                      children: <Widget>[
+                        TextField(
+                          onChanged: (val) {
+                            staff.email = val;
+                          },
+                          decoration: InputDecoration(
+                            labelText: "${staff.staffname} New Email",
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          child: RaisedButton(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10)),
                             onPressed: () {
                               adminProvider.editStaff(staff, staff.documentId);
                               showModalBottomSheet(
@@ -83,13 +78,15 @@ class AdminStaff extends StatelessWidget {
                                         ),
                                       ));
                             },
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Text("Edit Staff"),
+                            color: Color(0xffff6ea1),
+                            child: Text(
+                              "Edit Staff",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     );
                   });
             },
@@ -99,3 +96,43 @@ class AdminStaff extends StatelessWidget {
     );
   }
 }
+//textField
+/*TextField(
+                                  onChanged: (val) {
+                                    staff.email = val;
+                                  },
+                                  decoration: InputDecoration(
+                                    labelText: "${staff.staffname} New Email",
+                                  ),
+                                ),*/
+
+//onPressed
+
+/*  adminProvider.editStaff(staff, staff.documentId);
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (_) => Container(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Text(
+                                              "The staff's email has been updated correctly!",
+                                              style: showDiaStyle,
+                                            ),
+                                            FlatButton(
+                                              child: Text('Got it'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context)
+                                                    .pushReplacement(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                ShowStaff()));
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ));*/

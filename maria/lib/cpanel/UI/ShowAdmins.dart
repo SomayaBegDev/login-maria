@@ -15,6 +15,7 @@ class ShowAdmins extends StatelessWidget {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
+          resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             backgroundColor: appBarColor,
             title: Text('Admin Control Panel'),
@@ -38,80 +39,78 @@ class AddNewAdmin extends StatelessWidget {
     AdminProvider adminProvider =
         Provider.of<AdminProvider>(context, listen: false);
     // TODO: implement build
-    return Container(
-      child: Center(
-        child: Column(children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              constraints: BoxConstraints(maxWidth: 400),
-              child: TextField(
-                onChanged: (value) {
-                  adminProvider.setAdminName(value);
-                },
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: "Admin Name *",
-                ),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-              constraints: BoxConstraints(maxWidth: 400),
-              child: TextField(
-                onChanged: (value) {
-                  adminProvider.setAdminEmail(value);
-                },
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  labelText: "Email Address *",
-                ),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-          /*Container(
-                    constraints: BoxConstraints(maxWidth: 400),
-                    child: AdminTextField(
-                      label: "Re-write password *",
-                      type: textFieldType.password2,
-                    )),
-                SizedBox(
-                  height: 10,
-                ),*/
-          Container(
-              constraints: BoxConstraints(maxWidth: 400),
-              child: TextField(
-                onChanged: (value) {
-                  adminProvider.setAdminPassword(value);
-                },
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  labelText: "Password *",
-                ),
-              )),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            constraints: BoxConstraints(minWidth: 200),
-            child: RaisedButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              onPressed: () {
-                adminProvider.addNewAdmin();
+    return SingleChildScrollView(
+      child: Column(children: <Widget>[
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: TextField(
+              onChanged: (value) {
+                adminProvider.setAdminName(value);
               },
-              color: Color(0xffff6ea1),
-              child: Text(
-                "Add Admin",
-                style: TextStyle(color: Colors.white, fontSize: 15),
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: "Admin Name *",
               ),
+            )),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: TextField(
+              onChanged: (value) {
+                adminProvider.setAdminEmail(value);
+              },
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                labelText: "Email Address *",
+              ),
+            )),
+        SizedBox(
+          height: 10,
+        ),
+        /*Container(
+                      constraints: BoxConstraints(maxWidth: 400),
+                      child: AdminTextField(
+                        label: "Re-write password *",
+                        type: textFieldType.password2,
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),*/
+        Container(
+            constraints: BoxConstraints(maxWidth: 400),
+            child: TextField(
+              onChanged: (value) {
+                adminProvider.setAdminPassword(value);
+              },
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: "Password *",
+              ),
+            )),
+        SizedBox(
+          height: 10,
+        ),
+        Container(
+          constraints: BoxConstraints(minWidth: 200),
+          child: RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            onPressed: () {
+              adminProvider.addNewAdmin();
+            },
+            color: Color(0xffff6ea1),
+            child: Text(
+              "Add Admin",
+              style: TextStyle(color: Colors.white, fontSize: 15),
             ),
           ),
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/UI/ShowBooking.dart';
 import '../../Constant/Images/ImagesAndConst.dart';
+import '../../MySplash.dart';
 import 'ShowAdmins.dart';
 import 'ShowBooking.dart';
 import 'ShowServices.dart';
@@ -64,6 +66,17 @@ class ControlPanel extends StatelessWidget {
               }
             },
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.exit_to_app,
+          color: Colors.white,
+        ),
+        backgroundColor: appBarColor,
+        onPressed: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => MySplash()));
         },
       ),
     );
