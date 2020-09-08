@@ -5,7 +5,7 @@ import '../../Constant/Images/ImagesAndConst.dart';
 import '../../MySplash.dart';
 import 'ShowAdmins.dart';
 import 'ShowBooking.dart';
-import 'ShowServices.dart';
+import 'ShowCategories.dart';
 import 'ShowStaff.dart';
 
 class ControlPanel extends StatelessWidget {
@@ -56,7 +56,7 @@ class ControlPanel extends StatelessWidget {
                     .push(MaterialPageRoute(builder: (context) => ShowStaff()));
               } else if (selOrder == 1) {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ShowServices()));
+                    MaterialPageRoute(builder: (context) => ShowCategories()));
               } else if (selOrder == 2) {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ShowAdmins()));

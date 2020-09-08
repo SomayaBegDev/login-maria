@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
+import 'package:maria/cpanel/UI/widgets/AdminCategory.dart';
 import 'package:maria/cpanel/model/Category.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
@@ -11,9 +12,7 @@ import 'package:maria/cpanel/UI/widgets/AdminService.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 
-class ShowServices extends StatelessWidget {
-  Category category;
-  ShowServices(this.category);
+class ShowCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -23,27 +22,22 @@ class ShowServices extends StatelessWidget {
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
             backgroundColor: appBarColor,
-            title: Text('Service Control Panel'),
+            title: Text('Category Control Panel'),
             bottom: TabBar(tabs: [
               Tab(
-                text: 'New Service',
+                text: 'New Category',
               ),
               Tab(
-                text: 'All Services',
+                text: 'All Categories',
               )
             ]),
           ),
-          body: TabBarView(children: [
-            AddNewService(this.category),
-            AllServices(this.category)
-          ]),
+          body: TabBarView(children: [AddNewCategory(), AllCategories()]),
         ));
   }
 }
 
-class AddNewService extends StatelessWidget {
-  Category category;
-  AddNewService(this.category);
+class AddNewCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -61,11 +55,11 @@ class AddNewService extends StatelessWidget {
                 source: ImageSource.gallery, maxWidth: 250, maxHeight: 250);
             File file = File(imageFile.path);
             Provider.of<AdminProvider>(context, listen: false)
-                .uploadImage(file);
+                .uploadCategoryImage(file);
           },
           child: Consumer<AdminProvider>(
             builder: (context, value, child) {
-              String imageUrl = value.imageUrl;
+              String imageUrl = value.categoryImageUrl;
               if (imageUrl == null) {
                 return Container(
                   height: screenSize.height / 3,
@@ -93,23 +87,11 @@ class AddNewService extends StatelessWidget {
         ),
         TextField(
           onChanged: (value) {
-            adminProvider.setServiceName(value);
+            adminProvider.setCategoryName(value);
           },
           keyboardType: TextInputType.text,
           decoration: InputDecoration(
-            labelText: "Service Name *",
-          ),
-        ),
-        SizedBox(
-          height: screenSize.height / 90,
-        ),
-        TextField(
-          onChanged: (value) {
-            adminProvider.setFee(value);
-          },
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-            labelText: "Fee *",
+            labelText: "Category Name *",
           ),
         ),
         SizedBox(
@@ -121,7 +103,7 @@ class AddNewService extends StatelessWidget {
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             onPressed: () {
-              adminProvider.addNewService(this.category);
+              adminProvider.addNewCategory();
               showModalBottomSheet(
                 context: context,
                 builder: (_) => Container(
@@ -130,7 +112,7 @@ class AddNewService extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "The service has been correctly added",
+                        "The category has been correctly added",
                         style: showDiaStyle,
                       ),
                       FlatButton(
@@ -139,8 +121,7 @@ class AddNewService extends StatelessWidget {
                           Navigator.of(context).pop();
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      ShowServices(this.category)));
+                                  builder: (context) => ShowCategories()));
                         },
                       ),
                     ],
@@ -150,7 +131,7 @@ class AddNewService extends StatelessWidget {
             },
             color: Color(0xffff6ea1),
             child: Text(
-              "Add Service",
+              "Add Category",
               style: TextStyle(color: Colors.white, fontSize: 15),
             ),
           ),
@@ -160,27 +141,28 @@ class AddNewService extends StatelessWidget {
   }
 }
 
-class AllServices extends StatelessWidget {
-  Category category;
-  AllServices(this.category);
+class AllCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<AdminProvider>(context, listen: false)
-        .getAllServices(this.category);
+    AdminProvider adminProvider =
+        Provider.of<AdminProvider>(context, listen: false);
+
+    adminProvider.getAllCategories();
+
     // TODO: implement build
     return Consumer<AdminProvider>(
       builder: (context, value, child) {
-        List<Service> allServices = value.allServices;
-        if (allServices.isEmpty) {
+        List<Category> allCategories = value.allCategories;
+        if (allCategories.isEmpty) {
           return Center(
-            child: Text('No Services Found'),
+            child: Text('No Categories Found'),
           );
         } else {
           return ListView.builder(
-            itemCount: allServices.length,
+            itemCount: allCategories.length,
             itemBuilder: (context, index) {
-              return AdminService(
-                service: allServices[index],
+              return AdminCategory(
+                category: allCategories[index],
               );
             },
           );

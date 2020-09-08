@@ -2,16 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/cpanel/UI/ControlPanel.dart';
-import 'package:maria/cpanel/UI/ShowServices.dart';
+import 'package:maria/cpanel/UI/ShowCategories.dart';
+import 'package:maria/cpanel/model/Category.dart';
 import 'package:maria/cpanel/model/Service.dart';
 import 'package:maria/cpanel/providers/AdminProvider.dart';
 import 'package:provider/provider.dart';
 
-class AdminService extends StatelessWidget {
-  //double newFee = 0;
-  Service service;
+import '../ShowServices.dart';
 
-  AdminService({this.service});
+class AdminService extends StatelessWidget {
+  Service service;
+  Category category;
+
+  AdminService({this.service, this.category});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class AdminService extends StatelessWidget {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        adminProvider.deleteService(service.documentId);
+        adminProvider.deleteService(service.documentId, category);
       },
       child: Card(
         child: ListTile(
@@ -55,7 +58,7 @@ class AdminService extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             onPressed: () {
                               adminProvider.editService(
-                                  service, service.documentId);
+                                  service, service.documentId, category);
                               showModalBottomSheet(
                                   context: context,
                                   builder: (_) => Container(
@@ -77,7 +80,8 @@ class AdminService extends StatelessWidget {
                                                     .pushReplacement(
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ShowServices()));
+                                                                ShowServices(this
+                                                                    .category)));
                                               },
                                             ),
                                           ],

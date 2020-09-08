@@ -5,6 +5,7 @@ class Service {
   String name;
   double fee;
   String imageUrl;
+
   Service({this.documentId, this.name, this.fee, this.imageUrl});
   Service.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
     this.documentId = docSnapShot.documentID;
