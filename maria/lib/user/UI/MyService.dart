@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
+import 'package:maria/cpanel/model/Category.dart';
 import 'package:maria/user/UI/UserMainScreen.dart';
 import 'package:maria/user/model/UserBooking.dart';
+import 'package:maria/user/model/UserCategory.dart';
 import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/providers/UserProvider.dart';
@@ -17,7 +19,8 @@ class MyService extends StatelessWidget {
   String strSelDate = "";
   int selectedService;
   String userName;
-  MyService(this.selectedService, this.userName);
+  UserCategory userCategory;
+  MyService(this.selectedService, this.userName, this.userCategory);
   String staffName = "Maryam";
 
   MaterialColor bootomTextColor = MaterialColor(0xffff6ea1, <int, Color>{
@@ -115,7 +118,7 @@ class MyService extends StatelessWidget {
     UserProvider userProvider = Provider.of<UserProvider>(context);
 
     userProvider.getAllStaff();
-    userProvider.getAllServices();
+    userProvider.getAllServices(this.userCategory);
     userProvider.getAllUserBooking();
     return Scaffold(
       appBar: AppBar(
@@ -138,6 +141,33 @@ class MyService extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Text(
+                          "Category",
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          this.userCategory.name,
+                          style: TextStyle(
+                            color: const Color(0xffff6ea1),
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -317,7 +347,8 @@ class MyService extends StatelessWidget {
                                           MaterialPageRoute(
                                               builder: (context) => MyService(
                                                   this.selectedService,
-                                                  this.userName)));
+                                                  this.userName,
+                                                  this.userCategory)));
                                     },
                                   ),
                                 ],

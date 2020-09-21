@@ -5,6 +5,7 @@ class UserBooking {
   String documentId;
   String username;
   String staffname;
+  String category;
   String service;
   String imageUrl;
   var date;
@@ -17,6 +18,7 @@ class UserBooking {
       {this.documentId,
       this.username,
       this.staffname,
+      this.category,
       this.service,
       this.imageUrl,
       this.date,
@@ -28,6 +30,7 @@ class UserBooking {
   UserBooking.fromDocumetSnapshot(DocumentSnapshot docSnapShot) {
     this.documentId = docSnapShot.documentID;
     this.username = docSnapShot.data['username'];
+    this.category = docSnapShot.data['category'];
     this.service = docSnapShot.data['service'];
     this.imageUrl = docSnapShot.data['imageUrl'];
     this.staffname = docSnapShot.data['staffname'];
@@ -40,6 +43,7 @@ class UserBooking {
   toJson() {
     return {
       'username': this.username,
+      'category': this.category,
       'service': this.service,
       'imageUrl': this.imageUrl,
       'staffname': this.staffname,

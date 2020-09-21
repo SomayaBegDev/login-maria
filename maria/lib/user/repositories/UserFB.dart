@@ -4,6 +4,7 @@ import 'package:maria/user/model/User.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/user/model/UserBooking.dart';
+import 'package:maria/user/model/UserCategory.dart';
 
 class UserFB {
   UserFB._();
@@ -21,10 +22,25 @@ class UserFB {
     }
   }
 
-  Future<List<DocumentSnapshot>> getAllServices() async {
+  //category operation
+  Future<List<DocumentSnapshot>> getAllCategories() async {
     try {
       QuerySnapshot querySnapshot =
-          await firestoreUser.collection(serviceCollname).getDocuments();
+          await firestoreUser.collection(categoryCollname).getDocuments();
+      return querySnapshot.documents;
+    } catch (error) {
+      print(error);
+    }
+  }
+  //services operation
+
+  Future<List<DocumentSnapshot>> getAllServices(UserCategory category) async {
+    try {
+      QuerySnapshot querySnapshot = await firestoreUser
+          .collection(categoryCollname)
+          .document(category.documentId)
+          .collection(serviceCollname)
+          .getDocuments();
       return querySnapshot.documents;
     } catch (error) {
       print(error);

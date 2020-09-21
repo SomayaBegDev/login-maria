@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maria/Constant/MySnackBar.dart';
 import 'package:maria/Constant/Names.dart';
 import 'package:maria/user/model/User.dart';
+import 'package:maria/user/model/UserCategory.dart';
 import 'package:maria/user/model/UserService.dart';
 import 'package:maria/user/model/UserStaff.dart';
 import 'package:maria/user/model/UserBooking.dart';
@@ -53,11 +54,31 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  //Category Section
+  List<UserCategory> allCategories = [];
+  List<UserService> services = [];
+
+  setAllCategories(List<UserCategory> categories) {
+    this.allCategories = categories;
+  }
+
+  getAllCategories() async {
+    try {
+      List<UserCategory> categories = await UserRep.userRep.getAllCategories();
+      this.allCategories = categories;
+
+      notifyListeners();
+    } catch (error) {
+      print(error);
+    }
+  }
+
   //service section
   List<UserService> allServices = [];
-  getAllServices() async {
+  getAllServices(UserCategory category) async {
     try {
-      List<UserService> services = await UserRep.userRep.getAllServices();
+      List<UserService> services =
+          await UserRep.userRep.getAllServices(category);
       this.allServices = services;
 
       notifyListeners();
@@ -83,6 +104,7 @@ class UserProvider extends ChangeNotifier {
   List<UserBooking> allUserBooking = [];
 
   String staffName;
+  String category;
   String service;
   String imageUrl;
   var date = "";
@@ -94,6 +116,10 @@ class UserProvider extends ChangeNotifier {
 
   setStaffName(String stName) {
     this.staffName = stName;
+  }
+
+  setCategory(String category) {
+    this.category = category;
   }
 
   setService(String aService) {
@@ -128,6 +154,7 @@ class UserProvider extends ChangeNotifier {
     UserBooking userBooking = UserBooking(
         username: this.userName,
         staffname: this.staffName,
+        category: this.category,
         service: this.service,
         imageUrl: this.imageUrl,
         date: this.date,

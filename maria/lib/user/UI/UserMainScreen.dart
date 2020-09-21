@@ -3,11 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:maria/Constant/ColorsAndTextStyle.dart';
 import 'package:maria/MySplash.dart';
-import 'package:maria/UI/Login.dart';
-import 'package:maria/cpanel/model/User.dart';
+import 'package:maria/user/UI/Category.dart';
 import 'package:maria/user/UI//Booking.dart';
-
-import 'Services.dart';
 
 class UserMainScreen extends StatelessWidget {
   String username = "";
@@ -23,15 +20,15 @@ class UserMainScreen extends StatelessWidget {
             title: Text('Welcome , ${this.username}'),
             bottom: TabBar(tabs: [
               Tab(
-                icon: Icon(Icons.style),
+                icon: Icon(Icons.category),
               ),
               Tab(
-                icon: Icon(Icons.apps),
+                icon: Icon(Icons.book),
               ),
             ]),
           ),
           body: TabBarView(
-              children: [Services(this.username), Booking(this.username)]),
+              children: [Category(this.username), Booking(this.username)]),
           floatingActionButton: FloatingActionButton(
             child: Icon(
               Icons.exit_to_app,

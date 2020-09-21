@@ -24,6 +24,185 @@ class Booking extends StatelessWidget {
     return thisUsBo;
   }
 
+  Widget whatToShow(BuildContext context, UserBooking thisUsBoo) {
+    if (thisUsBoo.confirmation == 0) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          RaisedButton(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            onPressed: () {
+              thisUsBoo.confirmation = 1;
+              Provider.of<UserProvider>(context, listen: false)
+                  .updateBooking(thisUsBoo, thisUsBoo.documentId);
+              showModalBottomSheet(
+                  context: context,
+                  builder: (_) => Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "The service has been confirmed correctly!",
+                              style: showDiaStyle,
+                            ),
+                            FlatButton(
+                              child: Text('Got it'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UserMainScreen(this.userName)));
+                              },
+                            ),
+                          ],
+                        ),
+                      ));
+            },
+            color: Color(0xffff6ea1),
+            child: Text(
+              "Confirm",
+              style: TextStyle(color: Colors.white, fontSize: 15),
+            ),
+          ),
+        ],
+      );
+    } else {
+      if (thisUsBoo.comment == "") {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              constraints: BoxConstraints(maxWidth: 180),
+              child: TextField(
+                onChanged: (comment) {
+                  thisUsBoo.comment = comment;
+                },
+                autocorrect: true,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                    hintText: "Add a short comment",
+                    alignLabelWithHint: true,
+                    hintStyle: TextStyle(color: appBarColor)),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            SmoothStarRating(
+              color: appBarColor,
+              borderColor: appBarColor,
+              rating:
+                  Provider.of<UserProvider>(context, listen: false).evaluation,
+              isReadOnly: false,
+              filledIconData: Icons.star,
+              halfFilledIconData: Icons.star_half,
+              defaultIconData: Icons.star_border,
+              starCount: 5,
+              allowHalfRating: true,
+              spacing: 2.0,
+              onRated: (value) {
+                thisUsBoo.evaluation = value;
+              },
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  onPressed: () {
+                    Provider.of<UserProvider>(context, listen: false)
+                        .updateBooking(thisUsBoo, thisUsBoo.documentId);
+
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (_) => Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "The comment & evaluation have been updated correctly!",
+                                    style: showDiaStyle,
+                                  ),
+                                  FlatButton(
+                                    child: Text('Got it'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Navigator.of(context).pushReplacement(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserMainScreen(
+                                                      this.userName)));
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ));
+                  },
+                  color: Color(0xffff6ea1),
+                  child: Text(
+                    "Add",
+                    style: TextStyle(color: Colors.white, fontSize: 15),
+                  ),
+                ),
+              ],
+            )
+          ],
+        );
+      } else {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Your comment",
+                  style: TextStyle(fontSize: 15, color: Colors.black45),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  thisUsBoo.comment,
+                  style: TextStyle(fontSize: 15, color: Colors.black45),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "Your evaluation",
+                  style: TextStyle(fontSize: 15, color: Colors.black45),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "${thisUsBoo.evaluation} /5.0",
+                  style: TextStyle(fontSize: 15, color: Colors.black45),
+                ),
+              ],
+            ),
+          ],
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProv = Provider.of<UserProvider>(context, listen: false);
@@ -74,9 +253,21 @@ class Booking extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        thisUseBoo[index].service,
+                                        thisUseBoo[index].category,
                                         style: TextStyle(
                                             fontSize: 20,
+                                            color: appBarColor,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        thisUseBoo[index].service,
+                                        style: TextStyle(
+                                            fontSize: 15,
                                             color: appBarColor,
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -180,181 +371,7 @@ class Booking extends StatelessWidget {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  thisUseBoo[index].confirmation == 0
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            RaisedButton(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10)),
-                                              onPressed: () {
-                                                thisUseBoo[index].confirmation =
-                                                    1;
-                                                Provider.of<UserProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .updateBooking(
-                                                        thisUseBoo[index],
-                                                        thisUseBoo[index]
-                                                            .documentId);
-                                                showModalBottomSheet(
-                                                    context: context,
-                                                    builder: (_) => Container(
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: <Widget>[
-                                                              Text(
-                                                                "The service has been confirmed correctly!",
-                                                                style:
-                                                                    showDiaStyle,
-                                                              ),
-                                                              FlatButton(
-                                                                child: Text(
-                                                                    'Got it'),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pushReplacement(MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              UserMainScreen(this.userName)));
-                                                                },
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ));
-                                              },
-                                              color: Color(0xffff6ea1),
-                                              child: Text(
-                                                "Confirm",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 15),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            Container(
-                                              constraints:
-                                                  BoxConstraints(maxWidth: 180),
-                                              child: TextField(
-                                                onChanged: (comment) {
-                                                  thisUseBoo[index].comment =
-                                                      comment;
-                                                },
-                                                autocorrect: true,
-                                                textAlign: TextAlign.center,
-                                                decoration: InputDecoration(
-                                                    hintText:
-                                                        "Add a short comment",
-                                                    alignLabelWithHint: true,
-                                                    hintStyle: TextStyle(
-                                                        color: appBarColor)),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            SmoothStarRating(
-                                              color: appBarColor,
-                                              borderColor: appBarColor,
-                                              rating: userProv.evaluation,
-                                              isReadOnly: false,
-                                              filledIconData: Icons.star,
-                                              halfFilledIconData:
-                                                  Icons.star_half,
-                                              defaultIconData:
-                                                  Icons.star_border,
-                                              starCount: 5,
-                                              allowHalfRating: true,
-                                              spacing: 2.0,
-                                              onRated: (value) {
-                                                thisUseBoo[index].evaluation =
-                                                    value;
-                                              },
-                                            ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                RaisedButton(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  onPressed: () {
-                                                    Provider.of<UserProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .updateBooking(
-                                                            thisUseBoo[index],
-                                                            thisUseBoo[index]
-                                                                .documentId);
-
-                                                    showModalBottomSheet(
-                                                        context: context,
-                                                        builder:
-                                                            (_) => Container(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .center,
-                                                                    children: <
-                                                                        Widget>[
-                                                                      Text(
-                                                                        "The comment & evaluation have been updated correctly!",
-                                                                        style:
-                                                                            showDiaStyle,
-                                                                      ),
-                                                                      FlatButton(
-                                                                        child: Text(
-                                                                            'Got it'),
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.of(context)
-                                                                              .pop();
-                                                                          Navigator.of(context)
-                                                                              .pushReplacement(MaterialPageRoute(builder: (context) => UserMainScreen(this.userName)));
-                                                                        },
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ));
-                                                  },
-                                                  color: Color(0xffff6ea1),
-                                                  child: Text(
-                                                    "Add",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 15),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
+                                  whatToShow(context, thisUseBoo[index])
                                 ],
                               ),
                             )

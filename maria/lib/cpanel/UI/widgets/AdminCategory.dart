@@ -35,7 +35,7 @@ class AdminCategory extends StatelessWidget {
               color: appBarColor,
             ),
             onPressed: () {
-              Navigator.of(context).pop();
+              //Navigator.of(context).pop();
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => ShowServices(category)));
             },
